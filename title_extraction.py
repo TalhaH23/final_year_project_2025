@@ -1,5 +1,7 @@
 import os
 import fitz
+from typing import List
+from langchain_core.documents import Document
 from collections import Counter
 from unstructured.partition.pdf import partition_pdf
 from unstructured.documents.elements import Title
@@ -79,5 +81,51 @@ def section_headers(file_path):
         
     return intersecting_titles
 
-section_headers(file_path)
+# section_headers(file_path)
+
+def get_title_positions_by_lines(full_text: str, titles: List[str]) -> List[tuple]:
+    positions = []
+    lower_text = full_text.lower()
+    lines = full_text.splitlines()
+
+    running_idx = 0
+    for line in lines:
+        line_clean = line.strip()
+        for title in titles:
+            if line_clean == title:
+                pos = lower_text.find(line_clean.lower(), running_idx)
+                if pos != -1:
+                    positions.append((title, pos))
+        running_idx += len(line) + 1  # +1 for newline
+
+    return positions
+
+def chunk_document_by_titles(file_path, titles: List[str]) -> List[Document]:
+
+    doc = fitz.open(file_path)
+    full_text = ""
+    for page in doc:
+        full_text += page.get_text()
+
+    # Normalize the full text
+    full_text = full_text.strip()
+
+    title_positions = get_title_positions_by_lines(full_text, titles)
+    title_positions.sort(key=lambda x: x[1])
+    print(title_positions)
+
+    chunks = []
+    for i, (title, start_idx) in enumerate(title_positions):
+        end_idx = title_positions[i + 1][1] if i + 1 < len(title_positions) else len(full_text)
+        section_text = full_text[start_idx:end_idx].strip()
+
+        if section_text:
+            chunks.append(
+                Document(
+                    page_content=section_text,
+                    metadata={"source": file_path, "title": title}
+                )
+            )
+
+    return chunks
 
