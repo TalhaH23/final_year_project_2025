@@ -26,7 +26,8 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=100
 map_prompt = PromptTemplate(
     input_variables=["title", "text"],
     template="""
-Summarize the following document section.
+Summarize the following document section. Ignore references, footnotes, and citations. Focus on the main ideas and key points.
+The section could be a text chunk or sections of a table or data. If it is data then summarize the data in a table format.
 
 Return your answer in the following format:
 Section Title: {title}
@@ -47,9 +48,14 @@ reduce_prompt = PromptTemplate(
     input_variables=["text"],
     template="""
 You are given structured summaries. Organize them into a nested bullet list:
+- Have the main document title at the top. This is the title of the entire document. This is not always in the section titles. Please deduce the main title from the text.
 - Main sections at top level.
+- Use the Section Titles provided, and ensure the summaries are concise.
+- Some Section Titles may be empty or irrelevant; ignore them.
 - Subsections nested under them when appropriate.
-- Use only the Section Titles provided.
+- Use bullet points for clarity.
+- Avoid excessive detail, but ensure the main ideas are captured.
+- If the section is a table or data, summarize it in a table format.
 
 Here are the summaries:
 
@@ -100,17 +106,17 @@ def process_single_pdf(file_path):
                 f.write(doc.page_content.strip())
                 f.write("\n" + "=" * 60)
 
-        # # Optional: Add to vector store
-        # vector_store.add_documents(chunked_docs)
+        # Optional: Add to vector store
+        vector_store.add_documents(chunked_docs)
 
-        # # Summarize
-        # summary = map_reduce_chain.invoke(chunked_docs).content
-        # print(f"\nFinal Summary for {os.path.basename(file_path)}:\n{summary}\n")
+        # Summarize
+        summary = map_reduce_chain.invoke(chunked_docs).content
+        print(f"\nFinal Summary for {os.path.basename(file_path)}:\n{summary}\n")
 
-        # # Save summary
-        # summary_output_path = os.path.join("summaries", f"{base_name}_summary.txt")
-        # with open(summary_output_path, "w", encoding="utf-8") as f:
-        #     f.write(summary)
+        # Save summary
+        summary_output_path = os.path.join("summaries", f"{base_name}_summary.txt")
+        with open(summary_output_path, "w", encoding="utf-8") as f:
+            f.write(summary)
 
     except Exception as e:
         print(f"Error while processing {file_path}: {str(e)}")
