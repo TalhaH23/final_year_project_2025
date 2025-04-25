@@ -85,7 +85,7 @@ def process_single_pdf(file_path):
         print(f"Found {len(titles)} section headers")
 
         # Step 2: Chunk by titles
-        chunked_docs = chunk_document_by_titles(file_path, titles)
+        chunked_docs = chunk_document_by_titles(file_path, titles, chunk_size=1000, chunk_overlap=100)
         print(f"Chunked into {len(chunked_docs)} titled sections")
 
         # Save chunks to file
@@ -119,4 +119,4 @@ def process_single_pdf(file_path):
 # with ThreadPoolExecutor(max_workers=4) as executor:
 #     executor.map(process_single_pdf, pdf_files)
 
-process_single_pdf(pdf_files[1])
+process_single_pdf(pdf_files[0])

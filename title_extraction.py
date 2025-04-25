@@ -7,6 +7,7 @@ from collections import Counter
 from unstructured.partition.pdf import partition_pdf
 from unstructured.documents.elements import Title
 from langchain.text_splitter import RecursiveCharacterTextSplitter
+from unstructured.documents.elements import Title, NarrativeText, ListItem, Text
 
 # ---------- Step 1: PyMuPDF Header Extraction ----------
 def extract_mupdf_titles(file_path):
@@ -67,7 +68,7 @@ def extract_unstructured_titles(file_path):
 # ---------- Step 3: Compare and Print ----------
 pdf_folder = "PDFs"
 pdf_files = [os.path.join(pdf_folder, f) for f in os.listdir(pdf_folder) if f.endswith(".pdf")]
-file_path = pdf_files[1]
+# file_path = pdf_files[0]
 
 
 def section_headers(file_path):
@@ -102,30 +103,37 @@ def get_title_positions_by_lines(full_text: str, titles: List[str]) -> List[tupl
 
     return positions
 
-titles = section_headers(file_path)
+# titles = section_headers(file_path)
 
-def chunk_document_by_titles(file_path, titles: List[str], chunk_size=800, chunk_overlap=100) -> List[Document]:
+def chunk_document_by_titles(file_path, titles: List[str], chunk_size: int, chunk_overlap: int) -> List[Document]:
 
     # doc = fitz.open(file_path)
     # full_text = ""
     # for page in doc:
     #     full_text += page.get_text()
     
-    full_text = ""
-    with pdfplumber.open(file_path) as pdf:
-        for page in pdf.pages:
-            page_text = page.extract_text()
-            if page_text:
-                full_text += page_text + "\n"
+    # full_text = ""
+    # with pdfplumber.open(file_path) as pdf:
+    #     for page in pdf.pages:
+    #         page_text = page.extract_text()
+    #         if page_text:
+    #             full_text += page_text + "\n"
+    
+    # Step 1: Parse PDF using unstructured
+    elements = partition_pdf(filename=file_path, strategy="hi_res")
+
+    # Step 2: Rebuild full_text cleanly
+    full_text = "\n".join(
+        el.text.strip()
+        for el in elements
+        if el.text and isinstance(el, (Title, NarrativeText, ListItem, Text))
+    )
 
     full_text = full_text.strip()
+    print(full_text[:5000])  # optional debug
     
-    print(full_text[:5000])  # Print first 1000 characters for debugging
-
     title_positions = get_title_positions_by_lines(full_text, titles)
-
     title_positions.sort(key=lambda x: x[1])
-    print("Title positions:", title_positions)
 
     splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
     all_chunks = []
@@ -138,23 +146,23 @@ def chunk_document_by_titles(file_path, titles: List[str], chunk_size=800, chunk
         end_idx = title_positions[i + 1][1] if i + 1 < len(title_positions) else len(full_text)
         section_text = full_text[start_idx:end_idx].strip()
 
-        # if section_text:
-        #     chunks = splitter.split_text(section_text)
-        #     for chunk in chunks:
-        #         all_chunks.append(
-        #             Document(
-        #                 page_content=chunk,
-        #                 metadata={"source": file_path, "title": title}
-        #             )
-        #         )
+        if section_text:
+            chunks = splitter.split_text(section_text)
+            for chunk in chunks:
+                all_chunks.append(
+                    Document(
+                        page_content=chunk,
+                        metadata={"source": file_path, "title": title}
+                    )
+                )
         
-        all_chunks.append(
-            Document(
-                page_content=section_text,
-                metadata={"source": file_path, "title": title}
-            )
-        )
+        # all_chunks.append(
+        #     Document(
+        #         page_content=section_text,
+        #         metadata={"source": file_path, "title": title}
+        #     )
+        # )
 
     return all_chunks
 
-chunk_document_by_titles(file_path,titles)
+# chunk_document_by_titles(file_path,titles)

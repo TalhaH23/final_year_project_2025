@@ -1,23 +1,81 @@
-- **Introduction**
-  - Discusses the evolution of systematic review methodologies since the 1970s, highlighting the diversity and complexity of review types.
-  - Emphasizes the importance of adopting a pluralistic approach to evidence in healthcare.
-  - Outlines the creation of a central typology for different types of systematic reviews, defining systematic review as a structured, reproducible, and critical synthesis of existing research.
-  - Discusses various research frameworks used to investigate health-related questions, including Experiential (Qualitative), Costs/Economic Evaluation, and Prevalence and/or Incidence studies.
-  - Highlights the challenges faced by novice reviewers in achieving conceptual clarity and the importance of formulating precise and focused review questions.
-
-- **Open Access**
-  - Document proposes a typology and offers guidance for conducting systematic reviews in the medical and health sciences, authored by Zachary Munn and colleagues.
-
-- **Systematic Reviews**
-  - Essential in evidence-based healthcare, serving as the most reliable source for summarizing evidence to support clinical guidelines and decision-making.
-  - Methodology and terminology have evolved, with a focus on assessing health interventions through randomized controlled trials (RCTs).
-
-- **Discussion**
-  - Elaborates on the systematic review process, including data analysis, synthesis of findings, and interpretation of results.
-  - Discusses the importance of transparent reporting and the utility of systematic reviews in verifying evidence basis of current practices.
-  - Reviews various systematic reviews and meta-analyses focused on different aspects of medical technology and patient care.
-  - Highlights the rapid development and complexity within the field of evidence synthesis, noting the diversity and overlap of methodologies.
-  - Provides an overview of various measurement instruments and reporting guidelines used in healthcare research.
-
-- **CORRESPONDENCE**
-  - Section appears to be empty or lacks detailed content.
+- **Abstract**
+  - Systematic reviews are foundational to evidence-based healthcare.
+  - The methodology for systematic reviews has evolved to address a variety of health and medical science questions.
+  - This paper emphasizes the importance of selecting the appropriate type of systematic review based on the research question, a consideration often overlooked by new researchers.
+  - The document aims to provide a typology of different systematic review methodologies.
+  - It focuses on defining review types and establishing appropriate questions and inclusion criteria for each.
+  - The ultimate goal is to offer clear guidance for both novice and experienced reviewers, creating a unified typology regarding review types.
+  - Keywords include Systematic reviews, Evidence-based healthcare, and Question development.
+  - Systematic reviews are considered the gold standard for gathering, critiquing, and summarizing the best available evidence related to clinical questions.
+  - These reviews are crucial for developing reliable clinical guidelines and aiding clinical decision-making.
+  - The evolution of systematic reviews since their inception in the 1970s and 1980s has led to confusion among researchers due to the variety of review types and methodologies.
+  - Systematic reviews are crucial for evidence-based healthcare, ensuring results are reliable and meaningful.
+  - These reviews follow a structured research process and address specific types of questions with appropriate evidence.
+  - Traditionally, they focus on assessing health intervention effectiveness through the analysis of randomized controlled trials (RCTs).
+  - The document is associated with The Joanna Briggs Institute at The University of Adelaide.
+  - It is published under the Creative Commons Attribution 4.0 International License, allowing unrestricted use, distribution, and reproduction in any medium.
+  - Proper credit must be given to the original authors and the source, and any modifications to the work must be indicated.
+  - The Creative Commons Public Domain Dedication waiver applies to the data provided in this article, unless stated otherwise.
+  - The document discusses the variety of research approaches used in the health field beyond just determining the effectiveness of interventions.
+  - It highlights the need for a pluralistic approach in evaluating health research, as suggested by Pearson and colleagues.
+  - Various types of reviews are mentioned, including costs/economic evaluations, prevalence/incidence, diagnostic test accuracy, etiology/risk, expert opinion/policy, psychometric, and prognostic reviews.
+  - Emphasizes a pluralistic approach to evaluating evidence in healthcare, indicating that effectiveness studies alone are insufficient.
+  - Highlights the evolution and advancement of methods used in conducting systematic reviews.
+  - Focuses on the importance of answering diverse questions through systematic reviews to ensure the best evidence-based care.
+  - Notes that systematic reviews commonly assess the effectiveness of interventions or therapies, measuring the actual impact when applied correctly.
+  - The PICO approach is widely recognized and used for developing questions in systematic reviews, focusing primarily on the effectiveness of medical interventions.
+  - Comprehensive guidance exists to support the use of the PICO framework in these reviews.
+  - Systematic reviews have expanded beyond just medical interventions to address a variety of informational needs from healthcare professionals and policymakers, incorporating diverse factors like demographics, socioeconomic status, and intervention specifics.
+  - The variety of systematic review methodologies can be confusing for novice reviewers.
+  - Beginners often struggle with achieving clarity in planning systematic reviews, especially on topics beyond effectiveness.
+  - Reviewers frequently attempt to fit their research questions into the PICO format (population, intervention, comparator, outcomes) even when inappropriate.
+  - The document discusses the challenges of defining all elements of PICO (Patient, Intervention, Comparison, Outcome) in systematic reviews, which can complicate the review process.
+  - It proposes a typology of systematic review types that align with different review questions to aid novice systematic reviewers, editors, peer-reviewers, and policymakers.
+  - The document highlights the importance of including qualitative evidence in reviews, particularly to understand the perspectives of individuals experiencing the intervention as part of a broader phenomenon.
+  - This document introduces the first classification of types of systematic reviews in the medical and health sciences into a unified typology.
+  - The classification focuses on understanding whether interventions are effective from a person-centered perspective and why some interventions are not adopted despite proven effectiveness.
+  - The typology emphasizes the importance of systematic reviews in providing insights into patient experiences, thereby aiding health professionals in better understanding and interacting with patients.
+  - A mnemonic, PICo, is introduced to assist in the development of research questions within this typology.
+  - The document discusses various types of evidence synthesis approaches, including literature reviews, evidence maps, and more.
+  - It specifically focuses on approaches that align with a predefined definition mentioned earlier in the text.
+  - The paper lists ten different types of systematic review foci, emphasizing the importance of context which may vary based on the review's objective and could include cultural and geographic factors.
+  - The document discusses formulating questions for different types of reviews, including effectiveness and experiential (qualitative) reviews.
+  - It provides a structured format for posing questions in reviews, specifically using the PICO (Population, Intervention, Comparator/s, Outcomes) format for effectiveness reviews.
+  - An example question is given for an effectiveness review: "What is the effectiveness of exercise for treating depression in adults compared to no treatment or a comparison treatment?"
+  - Investigates the experiential aspect and meaningfulness of undergoing high technology medical imaging like MRI in adult patients in high-income countries.
+  - Examines the cost-effectiveness of self-monitoring blood glucose strategies in type 2 diabetes mellitus patients in high-income countries.
+  - Aims to determine the prevalence and/or incidence of claustrophobia in specific contexts, though the full context and details are not provided in the excerpt.
+  - Investigates the incidence of claustrophobic reactions in adult patients undergoing MRI.
+  - Evaluates the diagnostic test accuracy of nutritional tools like the Malnutrition Screening Tool versus the Patient Generated Subjective Global Assessment in identifying undernutrition among colorectal cancer patients.
+  - Examines the association between radon exposure and the risk of developing lung cancer in adults.
+  - Reviews risk exposures and factors related to lung cancer outcomes.
+  - Synthesizes expert opinions and policies on reducing maternal mortality in Southeast Asian countries including Cambodia, Thailand, Malaysia, and Sri Lanka.
+  - Evaluates the psychometric properties of tests assessing muscle strength in adults, focusing on reliability, validity, responsiveness, and interpretability of various measurement instruments.
+  - Discusses the relationship between specific prognostic factors and outcomes in adults with low back pain, focusing on how individual recovery expectations correlate with disability outcomes.
+  - Examines current research methodologies and their impact on the quality of research, specifically looking at the effect of masked peer review on the quality of quantitative studies as reported in published reports.
+  - References various studies and models to support the analysis of prognostic factors and research methodologies.
+  - The document discusses methods for achieving equality in healthcare provision, emphasizing the use of both qualitative and quantitative data.
+  - It mentions specific reporting guidelines for qualitative reviews, such as the ENTREQ statement and the newly proposed eMERGe guidelines.
+  - The text also highlights the role of cost and resource use evaluations, which can be part of standalone reviews or integrated into effectiveness reviews.
+  - Cost/Economic evaluations are a type of quantitative review that assess the financial implications of interventions, processes, or procedures.
+  - These evaluations use the PICO mnemonic to structure the review, ensuring a systematic approach to assessing costs.
+  - Evaluations consider the scope of the population affected, whether it be global, national, or a specific sub-population, and detail both the intervention and its comparators.
+  - Discusses the benefits and resource requirements for various health interventions.
+  - Highlights the importance of health economic evaluations in determining resource usage, costs, and cost-effectiveness of health interventions.
+  - Emphasizes the need to consider the context, such as health settings, and the specific conditions being investigated, like diseases or disabilities, in systematic reviews.
+  - Systematic reviews of etiology and risk are crucial for guiding healthcare planning and resource allocation.
+  - Prevalence reviews measure the proportion of a population with a specific disease, while incidence reviews focus on the frequency of disease occurrence.
+  - These reviews are particularly valuable for decision-makers in health policy and prevention strategies.
+  - The common objective is to assess the impact of various factors on health outcomes.
+  - Highlights the importance of informing governments, policymakers, health professionals, and the general population for the development and delivery of health services.
+  - Emphasizes the role of prevalence or incidence reviews in describing the geographical distribution of variables and variations among subgroups.
+  - Recommends using the PEO mnemonic to outline the review question, which should detail the exposure, disease, population at risk, context, and relevant time periods.
+  - The CoCoPop framework is utilized for reviews focusing on prevalence or incidence questions.
+  - It addresses the variable of interest which could be a health condition, disease, symptom, event, or factor.
+  - The framework aids in understanding exposure status related to specific risk factors or multiple risk factors associated with a health condition in a defined population or group.
+  - It emphasizes the importance of clearly reporting the exposure or risk factor, including methods of measurement or identification, dosage, and duration of exposure.
+  - The document discusses the importance of clearly defining and describing the population or study subjects in health-related reviews.
+  - It emphasizes the need to specify environmental factors and their impact on the health condition being studied.
+  - The document references guidance for conducting reviews that heavily rely on observational studies, highlighting the relevance of context in such research.
+  - The document discusses the importance of systematic reviews in assessing diagnostic test accuracy for healthcare practitioners.
+  - It emphasizes the use of Meta-analysis Of Observational Studies in Epidemiology (MOOSE) and PR
