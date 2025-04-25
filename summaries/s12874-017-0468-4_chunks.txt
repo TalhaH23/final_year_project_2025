@@ -26,6 +26,10 @@ novice authors and in the literature: determining the type of systematic review 
 question or priority.
 Results: Within the framework of the evidence-based healthcare paradigm, defining the question and type of systematic
 review to conduct is a pivotal first step that will guide the rest of the process and has the potential to impact on other
+============================================================
+
+🔹 Chunk 4: Abstract
+----------------------------------------
 aspects of the evidence-based healthcare cycle (evidence generation, transfer and implementation). It is something that
 novice reviewers (and others not familiar with the range of review types available) need to take account of but frequently
 overlook. Our aim is to provide a typology of review types and describe key elements that need to be addressed during
@@ -34,10 +38,15 @@ Conclusions: In this paper a typology is proposed of various systematic review m
 defined and situated with regard to establishing corresponding questions and inclusion criteria. The ultimate objective is
 to provide clarified guidance for both novice and experienced reviewers and a unified typology with respect to review
 types.
+============================================================
+
+🔹 Chunk 5: Abstract
+----------------------------------------
+types.
 Keywords: Systematic reviews, Evidence-based healthcare, Question development
 ============================================================
 
-🔹 Chunk 4: Introduction
+🔹 Chunk 6: Introduction
 ----------------------------------------
 Introduction
 Systematic reviews are the gold standard to search for, col-
@@ -53,6 +62,11 @@ seen as the pillar of evidence-based healthcare [3–6]. How-
 ever, systematic review methodology and the language used
 to express that methodology, has progressed significantly
 since their appearance in healthcare in the 1970’s and 80’s
+============================================================
+
+🔹 Chunk 7: Introduction
+----------------------------------------
+since their appearance in healthcare in the 1970’s and 80’s
 [7, 8]. The diachronic nature of this evolution has caused,
 and continues to cause, great confusion for both novice
 and experienced researchers seeking to synthesise various
@@ -66,6 +80,11 @@ Traditionally, systematic reviews have been predomin-
 antly conducted to assess the effectiveness of health in-
 terventions by critically examining and summarizing the
 results of randomized controlled trials (RCTs) (using
+============================================================
+
+🔹 Chunk 8: Introduction
+----------------------------------------
+results of randomized controlled trials (RCTs) (using
 * Correspondence: Zachary.Munn@adelaide.edu.au
 The Joanna Briggs Institute, The University of Adelaide, 55 King William Road,
 North Adelaide, Soueth Australia 5005, Australia
@@ -73,6 +92,10 @@ North Adelaide, Soueth Australia 5005, Australia
 International License (http://creativecommons.org/licenses/by/4.0/), which permits unrestricted use, distribution, and
 reproduction in any medium, provided you give appropriate credit to the original author(s) and the source, provide a link to
 the Creative Commons license, and indicate if changes were made. The Creative Commons Public Domain Dedication waiver
+============================================================
+
+🔹 Chunk 9: Introduction
+----------------------------------------
 (http://creativecommons.org/publicdomain/zero/1.0/) applies to the data made available in this article, unless otherwise stated.
 Munn et al. BMC Medical Research Methodology  (2018) 18:5 
 DOI 10.1186/s12874-017-0468-4
@@ -85,6 +108,11 @@ tice. As such, Pearson and colleagues have argued for a
 pluralistic approach when considering what counts as
 evidence in health care; suggesting that not all questions
 can be answered from studies measuring effectiveness
+alone [4, 11]. As the methods to conduct systematic re-
+============================================================
+
+🔹 Chunk 10: Introduction
+----------------------------------------
 alone [4, 11]. As the methods to conduct systematic re-
 views have evolved and advanced, so too has the think-
 ing around the types of questions we want and need to
@@ -100,6 +128,11 @@ This increasing array of systematic review options may
 be confusing for the novice systematic reviewer, and in
 our experience as educators, peer reviewers and editors
 we find that many beginner reviewers struggle to achieve
+============================================================
+
+🔹 Chunk 11: Introduction
+----------------------------------------
+we find that many beginner reviewers struggle to achieve
 conceptual clarity when planning for a systematic review
 on an issue other than effectiveness. For example, re-
 viewers regularly try to force their question into the
@@ -113,6 +146,11 @@ review questions to assist and guide the novice system-
 atic reviewer and editors, peer-reviewers and policy
 makers. To our knowledge, this is the first classification
 of types of systematic reviews foci conducted in the
+============================================================
+
+🔹 Chunk 12: Introduction
+----------------------------------------
+of types of systematic reviews foci conducted in the
 medical and health sciences into one central typology.
 Review typology
 For the purpose of this typology a systematic review is
@@ -125,6 +163,12 @@ paper seeks only to include approaches that subscribe to
 the above definition. As such, ten different types of sys-
 tematic review foci are listed below and in Table 1. In
 this proposed typology, we provide the key elements for
+formulating a question for each of the 10 review types.
+1. Effectiveness reviews [12]
+============================================================
+
+🔹 Chunk 13: Introduction
+----------------------------------------
 formulating a question for each of the 10 review types.
 1. Effectiveness reviews [12]
 2. Experiential (Qualitative) reviews [13]
@@ -143,6 +187,11 @@ tially effectiveness is the extent to which an intervention,
 when used appropriately, achieves the intended effect [11].
 The PICO approach (see Table 1) to question develop-
 ment is well known [23] and comprehensive guidance for
+============================================================
+
+🔹 Chunk 14: Introduction
+----------------------------------------
+ment is well known [23] and comprehensive guidance for
 these types of reviews is available [24]. Characteristics re-
 garding the population (e.g. demographic and socioeco-
 nomic factors and setting), intervention (e.g. variations in
@@ -157,6 +206,11 @@ Experiential (qualitative) reviews focus on analyzing hu-
 man experiences and cultural and social phenomena. Re-
 views including qualitative evidence may focus on the
 engagement between the participant and the intervention,
+============================================================
+
+🔹 Chunk 15: Introduction
+----------------------------------------
+engagement between the participant and the intervention,
 as such a qualitative review may describe an intervention,
 but its question focuses on the perspective of the individ-
 uals experiencing it as part of a larger phenomenon. They
@@ -169,6 +223,11 @@ providing information on the patient’s experience, which
 can enable the health professional to better understand
 and interact with patients. The mnemonic PICo can be
 used to guide question development (see Table 1). With
+============================================================
+
+🔹 Chunk 16: Introduction
+----------------------------------------
+used to guide question development (see Table 1). With
 qualitative evidence there is no outcome or comparator to
 be considered. A phenomenon of interest is the experi-
 ence, event or process occurring that is under study, such
@@ -180,6 +239,12 @@ tion, specific racial or gender based interests, and details
 about the setting such as acute care, primary healthcare,
 or the community [4, 13, 25]. Reviews assessing the ex-
 perience of a phenomenon may opt to use a mixed
+Munn et al. BMC Medical Research Methodology  (2018) 18:5 
+Page 2 of 9
+============================================================
+
+🔹 Chunk 17: Introduction
+----------------------------------------
 Munn et al. BMC Medical Research Methodology  (2018) 18:5 
 Page 2 of 9
 methods approach and also include quantitative data, such
@@ -195,6 +260,11 @@ sources available (including dollars) have alternative
 uses. In order to make the best decisions about alterna-
 tive courses of action evidence is needed on the health
 benefits and also on the types and amount of resources
+============================================================
+
+🔹 Chunk 18: Introduction
+----------------------------------------
+benefits and also on the types and amount of resources
 needed for these courses of action. Health economic
 evaluations are particularly useful to inform health
 policy decisions attempting to achieve equality in health-
@@ -207,6 +277,11 @@ effectiveness reviews [28]. Cost/Economic evaluations
 are examples of a quantitative review and as such can
 follow the PICO mnemonic (see Table 1). Consideration
 should be given to whether the entire world/inter-
+national population is to be considered or only a popula-
+============================================================
+
+🔹 Chunk 19: Introduction
+----------------------------------------
 national population is to be considered or only a popula-
 tion (or sub-population) of a particular country. Details
 of the intervention and comparator should include the
@@ -228,6 +303,13 @@ Comparator/s, Outcomes
 What is the effectiveness of exercise for
 treating depression in adults compared to
 no treatment or a comparison treatment? [69]
+Experiential
+(Qualitative)
+To investigate the experience or
+============================================================
+
+🔹 Chunk 20: Introduction
+----------------------------------------
 Experiential
 (Qualitative)
 To investigate the experience or
@@ -256,6 +338,13 @@ or Incidence
 To determine the prevalence and/or
 incidence of a certain condition
 Condition, Context,
+============================================================
+
+🔹 Chunk 21: Introduction
+----------------------------------------
+To determine the prevalence and/or
+incidence of a certain condition
+Condition, Context,
 Population (CoCoPop)
 [15]
 What is the prevalence/incidence of claustrophobia
@@ -276,6 +365,14 @@ compared to the Patient Generated Subjective
 Global Assessment amongst patients with colorectal
 cancer to identify undernutrition? [73]
 Etiology and/or
+Risk
+To determine the association between
+particular exposures/risk factors and
+outcomes
+============================================================
+
+🔹 Chunk 22: Introduction
+----------------------------------------
 Risk
 To determine the association between
 particular exposures/risk factors and
@@ -304,6 +401,14 @@ Construct of interest or the
 name of the measurement
 instrument(s), Population,
 Type of measurement
+============================================================
+
+🔹 Chunk 23: Introduction
+----------------------------------------
+Construct of interest or the
+name of the measurement
+instrument(s), Population,
+Type of measurement
 instrument, Measurement
 properties [31, 32]
 What is the reliability, validity, responsiveness and
@@ -325,6 +430,13 @@ between individual recovery expectations and
 disability outcomes? [77]
 Methodology
 To examine and investigate current
+============================================================
+
+🔹 Chunk 24: Introduction
+----------------------------------------
+disability outcomes? [77]
+Methodology
+To examine and investigate current
 research methods and potentially their
 impact on research quality.
 Types of Studies, Types of
@@ -342,6 +454,12 @@ text (including perspective) can also be considered in
 these types of questions e.g. health setting(s).
 Prevalence and/or incidence reviews
 Essentially prevalence or incidence reviews measure dis-
+============================================================
+
+🔹 Chunk 25: Introduction
+----------------------------------------
+Prevalence and/or incidence reviews
+Essentially prevalence or incidence reviews measure dis-
 ease burden (whether at a local, national or global level).
 Prevalence refers to the proportion of a population who
 have a certain disease whereas incidence relates to how
@@ -353,6 +471,11 @@ trends in diseases over time [15, 29]. Prevalence or inci-
 dence reviews are important in the description of geo-
 graphical distribution of a variable and the variation
 between subgroups (such as gender or socioeconomic
+status), and for informing health care planning and re-
+============================================================
+
+🔹 Chunk 26: Introduction
+----------------------------------------
 status), and for informing health care planning and re-
 source allocation. The CoCoPop framework can be used
 for reviews addressing a question relevant to prevalence
@@ -368,6 +491,12 @@ text or specific setting relevant to their review question
 clearly defined and described in detail.
 Diagnostic test accuracy reviews
 Systematic reviews assessing diagnostic test accuracy
+============================================================
+
+🔹 Chunk 27: Introduction
+----------------------------------------
+Diagnostic test accuracy reviews
+Systematic reviews assessing diagnostic test accuracy
 provide a summary of test performance and are import-
 ant for clinicians and other healthcare practitioners in
 order to determine the accuracy of the diagnostic tests
@@ -380,6 +509,11 @@ ommended for question development for these types of
 systematic reviews (see Table 1). The population is all
 participants who will undergo the diagnostic test while
 the index test(s) is the diagnostic test whose accuracy is
+============================================================
+
+🔹 Chunk 28: Introduction
+----------------------------------------
+the index test(s) is the diagnostic test whose accuracy is
 being investigated in the review. Consider if multiple it-
 erations of a test exist and who carries out or interprets
 the test, the conditions the test is conducted under and
@@ -391,6 +525,12 @@ condition of interest. Diagnosis of interest relates to
 what diagnosis is being investigated in the systematic re-
 view. This may be a disease, injury, disability or any
 other pathological condition [16].
+Etiology and/or risk reviews
+Systematic reviews of etiology and risk are important for
+============================================================
+
+🔹 Chunk 29: Introduction
+----------------------------------------
 Etiology and/or risk reviews
 Systematic reviews of etiology and risk are important for
 informing healthcare planning and resource allocation,
@@ -413,6 +553,11 @@ question should outline the exposure, disease, symptom
 or health condition of interest, the population or groups
 at risk, as well as the context/location, the time period
 and the length of time where relevant [17]. The exposure
+============================================================
+
+🔹 Chunk 30: Introduction
+----------------------------------------
+and the length of time where relevant [17]. The exposure
 of interest refers to a particular risk factor or several risk
 factors associated with a disease/condition of interest in
 a population, group or cohort who have been exposed to
@@ -425,6 +570,11 @@ stakeholders (e.g. knowledge users, consumers, policy
 makers, payers etc.) must be specified. Guidance now
 exists for conducting these types of reviews [17]. As
 these reviews rely heavily on observational studies, the
+Meta-analysis Of Observational Studies in Epidemiology
+============================================================
+
+🔹 Chunk 31: Introduction
+----------------------------------------
 Meta-analysis Of Observational Studies in Epidemiology
 (MOOSE) [30] reporting guidelines should be referred
 to in addition to the PRISMA guidelines.
@@ -440,6 +590,11 @@ view process is not well recognized in mainstream
 evidence-based practice. However, in the absence of re-
 search studies, the use of a transparent systematic
 process to identify the best available evidence drawn
+============================================================
+
+🔹 Chunk 32: Introduction
+----------------------------------------
+process to identify the best available evidence drawn
 from text and opinion can provide practical guidance to
 practitioners and policy makers [18]. While a number of
 mnemonics have been discussed previously that can be
@@ -454,6 +609,11 @@ Table 1). Reviewers will need to describe the population,
 giving attention to whether specific characteristics of
 interest, such as age, gender, level of education or pro-
 fessional qualification are important to the question. As
+============================================================
+
+🔹 Chunk 33: Introduction
+----------------------------------------
+fessional qualification are important to the question. As
 with other types of reviews, interventions may be broad
 areas of practice management, or specific, singular inter-
 ventions. However, reviews of text or opinion may also
@@ -465,6 +625,12 @@ is not necessarily required for a review of text and opin-
 ion based literature. In circumstances where they are
 considered appropriate, the nature and characteristics of
 the comparator and outcomes should be described [18].
+Psychometric reviews
+Psychometric systematic reviews (or systematic reviews
+============================================================
+
+🔹 Chunk 34: Introduction
+----------------------------------------
 Psychometric reviews
 Psychometric systematic reviews (or systematic reviews
 of measurement properties) are conducted to assess the
@@ -480,6 +646,11 @@ struct, c) the measurement properties of all available
 measurement instruments to measure a specific con-
 struct in a specific population or d) the measurement
 properties of all available measurement instruments in a
+============================================================
+
+🔹 Chunk 35: Introduction
+----------------------------------------
+properties of all available measurement instruments in a
 specific population that does not specify the construct to
 be measured. The COnsensus-based Standards for the
 selection of health Measurement Instruments (COS-
@@ -493,6 +664,11 @@ tionnaires, imaging tests) and the measurement proper-
 ties on which the review investigates (see Table 1).
 Prognostic reviews
 Prognostic research is of high value as it provides clini-
+cians and patients with information regarding the course
+============================================================
+
+🔹 Chunk 36: Introduction
+----------------------------------------
 cians and patients with information regarding the course
 of a disease and potential outcomes, in addition to poten-
 tially providing useful information to deliver targeted ther-
@@ -518,6 +694,18 @@ there
 is
 little
 information available to guide the development of a
+============================================================
+
+🔹 Chunk 37: Introduction
+----------------------------------------
+tests
+[20,
+34–37].
+Currently
+there
+is
+little
+information available to guide the development of a
 well-defined review question however the Quality in
 Prognosis Studies (QUIPS) tool [34] and the Checklist
 for critical appraisal and data extraction for systematic
@@ -531,6 +719,11 @@ able in the Cochrane Database [40, 41] and elsewhere
 [21]. These reviews can be performed to examine any
 methodological issues relating to the design, conduct
 and review of research studies and also evidence synthe-
+ses. There is limited guidance for conducting these re-
+============================================================
+
+🔹 Chunk 38: Introduction
+----------------------------------------
 ses. There is limited guidance for conducting these re-
 views, although there does exist an appendix in the
 Cochrane Handbook focusing specifically on methodo-
@@ -547,7 +740,7 @@ and secondary outcome measures should be listed (e.g.
 quality of published report) [39].
 ============================================================
 
-🔹 Chunk 5: Discussion
+🔹 Chunk 39: Discussion
 ----------------------------------------
 Discussion
 The need to establish a specific, focussed question that
@@ -564,6 +757,11 @@ and how they should conceptualize and phrase their re-
 view question, inclusion criteria and the appropriate
 methods for analysis and synthesis [23]. Ensuring that
 the review question is well formed is of the utmost im-
+============================================================
+
+🔹 Chunk 40: Discussion
+----------------------------------------
+the review question is well formed is of the utmost im-
 portance as question design has the most significant im-
 pact on the conduct of a systematic review as the
 subsequent inclusion criteria are drawn from the ques-
@@ -579,6 +777,11 @@ PICO for effectiveness reviews) whilst others are more
 novel. For example, the use of PIRD for diagnostic re-
 views contrasts with other mnemonics, such as PITR
 [43], PPP-ICP-TR [44] or PIRATE [45]. Qualitative re-
+============================================================
+
+🔹 Chunk 41: Discussion
+----------------------------------------
+[43], PPP-ICP-TR [44] or PIRATE [45]. Qualitative re-
 views have sometimes been guided by the mnemonic
 SPIDER, however this has been recommended against
 for guiding searching due to it not identifying papers
@@ -592,6 +795,11 @@ typology, constructing a well-built question for a system-
 atic review is a skill that can be mastered even for the
 novice reviewer.
 Related to this discussion of a typology for systematic
+reviews is the issue of how to distinguish a systematic
+============================================================
+
+🔹 Chunk 42: Discussion
+----------------------------------------
 reviews is the issue of how to distinguish a systematic
 review from a literature review. When searching the lit-
 erature, you may come across papers referred to as ‘sys-
@@ -613,6 +821,11 @@ when assessing publications identified as systematic re-
 views. Today, the methodology of systematic reviews
 continues to evolve. However, there is general accept-
 ance of certain steps being required in a systematic re-
+============================================================
+
+🔹 Chunk 43: Discussion
+----------------------------------------
+ance of certain steps being required in a systematic re-
 view of any evidence type [2] and these should be used
 to distinguish between a literature review and a system-
 atic review. The following can be viewed as the defining
@@ -629,6 +842,12 @@ studies, both published and unpublished
 (risk of bias) and assessment of the validity of their
 results/findings/ conclusions
 6. Analysis of data extracted from the included research
+============================================================
+
+🔹 Chunk 44: Discussion
+----------------------------------------
+results/findings/ conclusions
+6. Analysis of data extracted from the included research
 7. Presentation and synthesis of the results/ findings
 extracted
 8. Interpret the results, potentially establishing the
@@ -642,6 +861,11 @@ best approach. A systematic review may be undertaken
 to confirm whether current practice is based on evi-
 dence (or not) and to address any uncertainty or vari-
 ation in practice that may be occurring. Conducting a
+systematic review also identifies where evidence is not
+============================================================
+
+🔹 Chunk 45: Discussion
+----------------------------------------
 systematic review also identifies where evidence is not
 available and can help categorize future research in the
 area. Most importantly, they are used to produce state-
@@ -658,6 +882,11 @@ the last 30 years. These include integrative reviews,
 scoping reviews [47], evidence maps [48], realist synthe-
 ses [49], rapid reviews [50], umbrella reviews (systematic
 reviews of reviews) [51], mixed methods reviews [52],
+============================================================
+
+🔹 Chunk 46: Discussion
+----------------------------------------
+reviews of reviews) [51], mixed methods reviews [52],
 concept analyses [53] and others. Useful typologies of
 these diverse review types can be used as reference for
 researchers, policy makers and funders when discussing
@@ -672,6 +901,11 @@ Gough and colleagues [9] provided clarification be-
 tween different review designs and methods but stopped
 short of providing a taxonomy of review types. The ra-
 tionale for this was that in the field of evidence synthesis
+============================================================
+
+🔹 Chunk 47: Discussion
+----------------------------------------
+tionale for this was that in the field of evidence synthesis
 ‘the rate of development of new approaches to reviewing
 is too fast and the overlap of approaches too great for
 that to be helpful.’ [9] They instead provide a useful de-
@@ -683,6 +917,12 @@ here (such as effectiveness [56] or experiential [qualita-
 tive [57]]) there may be many different subsets and com-
 plexities that need to be addressed. Essentially, the
 Munn et al. BMC Medical Research Methodology  (2018) 18:5 
+Page 6 of 9
+classifications listed above may be just the initial level of
+============================================================
+
+🔹 Chunk 48: Discussion
+----------------------------------------
 Page 6 of 9
 classifications listed above may be just the initial level of
 a much larger family tree. We believe that this typology
@@ -698,6 +938,11 @@ systematic reviews) have not been common practice in
 the past (when comparing to clinical research) although
 this is changing [58–61]. Systematic reviews of these
 types of studies can be useful to inform the design of fu-
+============================================================
+
+🔹 Chunk 49: Discussion
+----------------------------------------
+types of studies can be useful to inform the design of fu-
 ture experiments (both preclinical and clinical) [59] and
 address an important gap in translation science [5, 60].
 Guidance for these types of reviews is now emerging
@@ -710,6 +955,11 @@ broader sense than simply to inform policy and practice
 and therefore ensuring that they are designed in a rigor-
 ous manner, addressing appropriate questions driven by
 clinical and policy needs is essential. With the ever-
+increasing global investment in health research it is im-
+============================================================
+
+🔹 Chunk 50: Discussion
+----------------------------------------
 increasing global investment in health research it is im-
 perative that the needs of health service providers
 and end users are met. It has been suggested that
@@ -724,6 +974,11 @@ conflicted with most having weak or insufficient evidence
 to inform decision making [66]. Indeed, asking has been
 identified as a core functional competency associated with
 obtaining and applying the best available evidence [67].
+============================================================
+
+🔹 Chunk 51: Discussion
+----------------------------------------
+obtaining and applying the best available evidence [67].
 Fundamental to the tenets of evidence-based healthcare
 and, in particular evidence implementation, is the ability
 to formulate a question that is amenable to obtaining evi-
@@ -736,6 +991,11 @@ determination of appropriate review types that respond to
 relevant clinical and policy questions is essential.
 The revised JBI Model of Evidence-Based Healthcare
 clarifies the conceptual integration of evidence gener-
+ation, synthesis, transfer and implementation, “linking
+============================================================
+
+🔹 Chunk 52: Discussion
+----------------------------------------
 ation, synthesis, transfer and implementation, “linking
 how these occur with the necessarily challenging dynamics
 that contribute to whether translation of evidence into
@@ -750,6 +1010,11 @@ tions produced in the review (evidence generation) but
 also on the success of their uptake in policy and prac-
 tice (evidence implementation). It is therefore critical
 for those undertaking systematic reviews to have a solid
+============================================================
+
+🔹 Chunk 53: Discussion
+----------------------------------------
+for those undertaking systematic reviews to have a solid
 understanding of the type of review required to respond
 to their question.
 For novice reviewers, or those unfamiliar with the
@@ -763,6 +1028,11 @@ or may not start with a clearly articulated clinical or pol-
 icy question. Having a better understanding of the re-
 view types available and the questions that these reviews
 types lend themselves to answering is critical to the suc-
+============================================================
+
+🔹 Chunk 54: Discussion
+----------------------------------------
+types lend themselves to answering is critical to the suc-
 cess or otherwise of a review. Given the significant re-
 source required to undertake a review this first step is
 critical as it will impact upon what occurs in both evi-
@@ -774,7 +1044,7 @@ tegic implications from a broader evidence-based health-
 care perspective.
 ============================================================
 
-🔹 Chunk 6: Conclusion
+🔹 Chunk 55: Conclusion
 ----------------------------------------
 Conclusion
 Systematic reviews are the ideal method to rigorously col-
@@ -791,6 +1061,11 @@ funders when deciding on an appropriate approach.
 Abbreviations
 CHARMS: CHecklist for critical Appraisal and data extraction for systematic
 Reviews of prediction Modelling Studies; CoCoPop: Condition, Context,
+============================================================
+
+🔹 Chunk 56: Conclusion
+----------------------------------------
+Reviews of prediction Modelling Studies; CoCoPop: Condition, Context,
 Population; COSMIN: COnsensus-based Standards for the selection of health
 Measurement Instruments; EBHC: Evidence-based healthcare; eMERGe: Meta-
 ethnography reporting guidelines; ENTREQ: Enhancing transparency in
@@ -800,6 +1075,11 @@ Munn et al. BMC Medical Research Methodology  (2018) 18:5
 Page 7 of 9
 PEO: Population, Exposure, Outcome; PFO: Population, Prognostic Factors (or
 models of interest), Outcome; PICO: Population, Intervention, Comparator,
+Outcome; PICo: Population, Phenomena of Interest, Context; PICOC: Population,
+============================================================
+
+🔹 Chunk 57: Conclusion
+----------------------------------------
 Outcome; PICo: Population, Phenomena of Interest, Context; PICOC: Population,
 Intervention, Comparator/s, Outcomes, Context; PIRD: Population, Index Test,
 Reference Test, Diagnosis of Interest; QUIPS: Quality in Prognosis Studies;
@@ -815,6 +1095,11 @@ ZM: Led the development of this paper and conceptualised the idea for a
 systematic review typology. Provided final approval for submission. CS:
 Contributed conceptually to the paper and wrote sections of the paper.
 Provided final approval for submission. EA: Contributed conceptually to the
+============================================================
+
+🔹 Chunk 58: Conclusion
+----------------------------------------
+Provided final approval for submission. EA: Contributed conceptually to the
 paper and reviewed and provided feedback on all drafts. Provided final
 approval for submission. CL: Contributed conceptually to the paper and
 reviewed and provided feedback on all drafts. Provided final approval for
@@ -827,6 +1112,11 @@ Consent for publication
 Not applicable
 Competing interests
 All the authors are members of the Joanna Briggs Institute, an evidence-based
+healthcare research institute which provides formal guidance regarding evidence
+============================================================
+
+🔹 Chunk 59: Conclusion
+----------------------------------------
 healthcare research institute which provides formal guidance regarding evidence
 synthesis, transfer and implementation.
 The authors have no other competing interests to declare.
@@ -845,6 +1135,13 @@ Aromataris E, Pearson A. The systematic review: an overview. AJN. Am J
 Nurs. 2014;114(3):53–8.
 3.
 Munn Z, Porritt K, Lockwood C, Aromataris E, Pearson A. Establishing
+============================================================
+
+🔹 Chunk 60: Conclusion
+----------------------------------------
+Nurs. 2014;114(3):53–8.
+3.
+Munn Z, Porritt K, Lockwood C, Aromataris E, Pearson A. Establishing
 confidence in the output of qualitative research synthesis: the ConQual
 approach. BMC Med Res Methodol. 2014;14:108.
 4.
@@ -858,6 +1155,12 @@ generated and used in healthcare. Nursing research and practice. 2012;2012:
 6.
 Steinberg E, Greenfield S, Mancher M, Wolman DM, Graham R. Clinical
 practice guidelines we can trust: National Academies Press 2011.
+7.
+Bastian H, Glasziou P, Chalmers I. Seventy-five trials and eleven systematic
+============================================================
+
+🔹 Chunk 61: Conclusion
+----------------------------------------
 7.
 Bastian H, Glasziou P, Chalmers I. Seventy-five trials and eleven systematic
 reviews a day: how will we ever keep up? PLoS Med. 2010;7(9):e1000326.
@@ -876,6 +1179,13 @@ based healthcare. International Journal of Evidence-Based Healthcare. 2005;
 3(8):207–15.
 12.
 Tufanaru C, Munn Z, Stephenson M, Aromataris E. Fixed or random effects
+============================================================
+
+🔹 Chunk 62: Conclusion
+----------------------------------------
+3(8):207–15.
+12.
+Tufanaru C, Munn Z, Stephenson M, Aromataris E. Fixed or random effects
 meta-analysis? Common methodological issues in systematic reviews of
 effectiveness. Int J Evid Based Healthc. 2015;13(3):196–207.
 13.
@@ -889,6 +1199,11 @@ systematic reviews of economic evaluations. Int J Evid Based Healthc. 2015;
 15.
 Munn Z, Moola S, Lisy K, Riitano D, Tufanaru C. Methodological guidance for
 systematic reviews of observational epidemiological studies reporting
+prevalence and cumulative incidence data. Int J Evid Based Healthc. 2015;
+============================================================
+
+🔹 Chunk 63: Conclusion
+----------------------------------------
 prevalence and cumulative incidence data. Int J Evid Based Healthc. 2015;
 13(3):147–53.
 16.
@@ -905,6 +1220,11 @@ review of text and opinion. Int J Evid Based Healthc. 2015;13(3):188–95.
 19.
 Mokkink LB, Terwee CB, Patrick DL, et al. The COSMIN checklist for assessing
 the methodological quality of studies on measurement properties of health
+============================================================
+
+🔹 Chunk 64: Conclusion
+----------------------------------------
+the methodological quality of studies on measurement properties of health
 status measurement instruments: an international Delphi study. Qual Life
 Res. 2010;19(4):539–49.
 20.
@@ -918,6 +1238,12 @@ Care: Poor Quality and Getting Worse. Journal of Burn Care & Research.
 22.
 France EF, Ring N, Thomas R, Noyes J, Maxwell M, Jepson RA. Methodological
 systematic review of what’s wrong with meta-ethnography reporting. BMC
+Med Res Methodol. 2014;14(1):1.
+23.
+============================================================
+
+🔹 Chunk 65: Conclusion
+----------------------------------------
 Med Res Methodol. 2014;14(1):1.
 23.
 Stern C, Jordan Z, McArthur A. Developing the review question and
@@ -936,6 +1262,13 @@ reporting the synthesis of qualitative research: ENTREQ. BMC Med Res Methodol.
 2012;12:181.
 27.
 France EF, Ring N, Noyes J, et al. Protocol-developing meta-ethnography
+============================================================
+
+🔹 Chunk 66: Conclusion
+----------------------------------------
+2012;12:181.
+27.
+France EF, Ring N, Noyes J, et al. Protocol-developing meta-ethnography
 reporting guidelines (eMERGe). BMC Med Res Methodol. 2015;15:103.
 28.
 Shemilt I, Mugford M, Byford S, et al. In: JPT H, Green S, editors. Chapter 15:
@@ -950,6 +1283,12 @@ Stroup DF, Berlin JA, Morton SC, et al. Meta-analysis of observational studies
 in epidemiology: a proposal for reporting. Meta-analysis of observational
 studies in epidemiology (MOOSE) group. JAMA. 2000;283(15):2008–12.
 31.
+============================================================
+
+🔹 Chunk 67: Conclusion
+----------------------------------------
+studies in epidemiology (MOOSE) group. JAMA. 2000;283(15):2008–12.
+31.
 COSMIN: COnsensus-based Standards for the selection of health
 Measurement INstruments. Systematic reviews of measurement
 properties. [cited 8th December 2016]; Available from: http://www.
@@ -962,6 +1301,13 @@ Instruments; 2011.
 Mokkink LB, Terwee CB, Stratford PW, et al. Evaluation of the methodological
 quality of systematic reviews of health status measurement instruments. Qual
 Life Res. 2009;18(3):313–33.
+Munn et al. BMC Medical Research Methodology  (2018) 18:5 
+Page 8 of 9
+34.
+============================================================
+
+🔹 Chunk 68: Conclusion
+----------------------------------------
 Munn et al. BMC Medical Research Methodology  (2018) 18:5 
 Page 8 of 9
 34.
@@ -980,6 +1326,13 @@ return-to-work following surgery for carpal tunnel syndrome: a systematic
 review. JBI Database of Systematic Reviews and Implementation Reports.
 2016;14(9):135–216.
 38.
+============================================================
+
+🔹 Chunk 69: Conclusion
+----------------------------------------
+review. JBI Database of Systematic Reviews and Implementation Reports.
+2016;14(9):135–216.
+38.
 Moons KG, de Groot JA, Bouwmeester W, et al. Critical appraisal and data
 extraction for systematic reviews of prediction modelling studies: the
 CHARMS checklist. PLoS Med. 2014;11(10):e1001744.
@@ -991,6 +1344,12 @@ Interventions. Version 5.1.0 ed: The Cochrane Collaboration 2011.
 40.
 Jefferson T, Rudin M, Brodney Folse S, Davidoff F. Editorial peer review for
 improving the quality of reports of biomedical studies. Cochrane Database
+Syst Rev. 2007;2:MR000016.
+41.
+============================================================
+
+🔹 Chunk 70: Conclusion
+----------------------------------------
 Syst Rev. 2007;2:MR000016.
 41.
 Djulbegovic B, Kumar A, Glasziou PP, et al. New treatments compared to
@@ -1009,6 +1368,12 @@ Test Accuracy The Cochrane Collaboration: In; 2013.
 Bae J-M. An overview of systematic reviews of diagnostic tests accuracy.
 Epidemiology and Health. 2014;36:e2014016.
 45.
+============================================================
+
+🔹 Chunk 71: Conclusion
+----------------------------------------
+Epidemiology and Health. 2014;36:e2014016.
+45.
 White S, Schultz T. Enuameh YAK. Lippincott Wiliams & Wilkins: Synthesizing
 evidence of diagnostic accuracy; 2011.
 46.
@@ -1024,6 +1389,12 @@ Hetrick SE, Parker AG, Callahan P, Purcell R. Evidence mapping: illustrating
 an emerging methodology to improve evidence-based practice in youth
 mental health. J Eval Clin Pract. 2010;16(6):1025–30.
 49.
+============================================================
+
+🔹 Chunk 72: Conclusion
+----------------------------------------
+mental health. J Eval Clin Pract. 2010;16(6):1025–30.
+49.
 Wong G, Greenhalgh T, Westhorp G, Pawson R. Development of
 methodological guidance, publication standards and training materials for
 realist and meta-narrative reviews: the RAMESES (Realist And Meta-narrative
@@ -1033,6 +1404,11 @@ Wong et al. under the terms of a commissioning contract issued by the
 secretary of state for health. This issue may be freely reproduced for the
 purposes of private research and study and extracts (or indeed, the full
 report) may be included in professional journals provided that suitable
+acknowledgement is made and the reproduction is not associated with any
+============================================================
+
+🔹 Chunk 73: Conclusion
+----------------------------------------
 acknowledgement is made and the reproduction is not associated with any
 form of advertising. Applications for commercial reproduction should be
 addressed to: NIHR journals library, National Institute for Health Research,
@@ -1045,6 +1421,13 @@ approach. Worldviews Evid-Based Nurs. 2015;12(3):131–8.
 51.
 Aromataris E, Fernandez R, Godfrey CM, Holly C, Khalil H, Tungpunkom P.
 Summarizing systematic reviews: methodological development, conduct
+and reporting of an umbrella review approach. Int J Evid Based Healthc.
+2015;13(3):132–40.
+52.
+============================================================
+
+🔹 Chunk 74: Conclusion
+----------------------------------------
 and reporting of an umbrella review approach. Int J Evid Based Healthc.
 2015;13(3):132–40.
 52.
@@ -1063,6 +1446,12 @@ Clin Epidemiol. 2011;64(1):11–20.
 Bender R. A practical taxonomy proposal for systematic reviews of
 therapeutic interventions. 21st Cochrane Colloquium Quebec, Canada 2013.
 57.
+============================================================
+
+🔹 Chunk 75: Conclusion
+----------------------------------------
+therapeutic interventions. 21st Cochrane Colloquium Quebec, Canada 2013.
+57.
 Kastner M, Tricco AC, Soobiah C, et al. What is the most appropriate
 knowledge synthesis method to conduct a review? Protocol for a scoping
 review. BMC Med Res Methodol. 2012;12:114.
@@ -1075,6 +1464,13 @@ usefulness of systematic reviews of animal experiments for the design of
 preclinical and clinical studies. ILAR J. 2014;55(3):427–37.
 60.
 Hooijmans CR, Ritskes-Hoitinga M. Progress in using systematic reviews of
+animal studies to improve translational research. PLoS Med. 2013;10(7):
+e1001482.
+61.
+============================================================
+
+🔹 Chunk 76: Conclusion
+----------------------------------------
 animal studies to improve translational research. PLoS Med. 2013;10(7):
 e1001482.
 61.
@@ -1093,6 +1489,12 @@ CAMARADES. Collaborative Approach to Meta-Analysis and Review of
 Animal Data from Experimental Studies. 2014 [cited 8th December 2016];
 Available from: http://www.dcn.ed.ac.uk/camarades/default.htm#about
 65.
+============================================================
+
+🔹 Chunk 77: Conclusion
+----------------------------------------
+Available from: http://www.dcn.ed.ac.uk/camarades/default.htm#about
+65.
 Moher D, Glasziou P, Chalmers I, et al. Increasing value and reducing waste
 in biomedical research: who's listening? Lancet. 2016;387(10027):1573–86.
 66.
@@ -1107,6 +1509,12 @@ Jordan Z, Lockwood C, Aromataris E. Munn Z. The Joanna Briggs Institute:
 The updated JBI model for evidence-based healthcare; 2016.
 69.
 Cooney GM, Dwan K, Greig CA, et al. Exercise for depression. Cochrane
+Database Syst Rev. 2013;9:CD004366.
+70.
+============================================================
+
+🔹 Chunk 78: Conclusion
+----------------------------------------
 Database Syst Rev. 2013;9:CD004366.
 70.
 Munn Z, Jordan Z. The patient experience of high technology medical
@@ -1126,6 +1534,12 @@ accuracy of nutritional tools used to identify undernutrition in patients with
 colorectal cancer: a systematic review. JBI Database System Rev Implement
 Rep. 2015;13(4):141–87.
 74.
+============================================================
+
+🔹 Chunk 79: Conclusion
+----------------------------------------
+Rep. 2015;13(4):141–87.
+74.
 Australia C. Risk factors for lung cancer: a systematic review. NSW: Surry
 Hills; 2014.
 75.
@@ -1140,6 +1554,11 @@ Reports. 2014;12(5):349–429.
 77.
 Hayden JA, Tougas ME, Riley R, Iles R, Pincus T. Individual recovery
 expectations and prognosis of outcomes in non-specific low back pain:
+prognostic factor exemplar review. Cochrane Libr. 2014. http://onlinelibrary.
+============================================================
+
+🔹 Chunk 80: Conclusion
+----------------------------------------
 prognostic factor exemplar review. Cochrane Libr. 2014. http://onlinelibrary.
 wiley.com/doi/10.1002/14651858.CD011284/full.
 Munn et al. BMC Medical Research Methodology  (2018) 18:5 

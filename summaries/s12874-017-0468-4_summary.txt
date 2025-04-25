@@ -1,5 +1,23 @@
-The document "Open Access: What kind of systematic review should I conduct? A proposed typology and guidance for systematic reviewers in the medical and health sciences" by Zachary Munn et al. serves as a comprehensive guide for researchers involved in systematic reviews within the medical and health sciences. It introduces a detailed typology of systematic review types, tailored to assist both novice and experienced reviewers in selecting the most suitable review methodology based on their specific research questions and objectives. This typology includes a variety of review types such as effectiveness reviews, qualitative reviews, and economic evaluations, each defined by distinct methodologies and question formats.
+- **Introduction**
+  - Discusses the evolution of systematic review methodologies since the 1970s, highlighting the diversity and complexity of review types.
+  - Emphasizes the importance of adopting a pluralistic approach to evidence in healthcare.
+  - Outlines the creation of a central typology for different types of systematic reviews, defining systematic review as a structured, reproducible, and critical synthesis of existing research.
+  - Discusses various research frameworks used to investigate health-related questions, including Experiential (Qualitative), Costs/Economic Evaluation, and Prevalence and/or Incidence studies.
+  - Highlights the challenges faced by novice reviewers in achieving conceptual clarity and the importance of formulating precise and focused review questions.
 
-The paper emphasizes the critical role of systematic reviews in evidence-based healthcare, highlighting their evolution since the 1970s and 1980s to accommodate a broader range of evidence types and clinical questions. It discusses the importance of formulating well-defined research questions, which are pivotal in guiding the review process, including the determination of search terms, inclusion and exclusion criteria, and the interpretation of data. The document also differentiates systematic reviews from literature reviews by underscoring the rigorous methodologies required for systematic reviews to provide reliable 'level 1' evidence.
+- **Open Access**
+  - Document proposes a typology and offers guidance for conducting systematic reviews in the medical and health sciences, authored by Zachary Munn and colleagues.
 
-Furthermore, the document aims to clarify the often confusing array of systematic review types for new researchers, offering clear guidance and a unified classification system that reflects current practices in evidence synthesis. This guidance is intended to influence not only the conduct of systematic reviews but also policy and clinical practice by providing reliable evidence that confirms current practices and identifies areas for future research. Overall, the work by Zachary Munn et al. is a valuable resource for enhancing the quality and effectiveness of systematic reviews in the medical and health sciences, thereby contributing to the advancement of evidence-based healthcare.
+- **Systematic Reviews**
+  - Essential in evidence-based healthcare, serving as the most reliable source for summarizing evidence to support clinical guidelines and decision-making.
+  - Methodology and terminology have evolved, with a focus on assessing health interventions through randomized controlled trials (RCTs).
+
+- **Discussion**
+  - Elaborates on the systematic review process, including data analysis, synthesis of findings, and interpretation of results.
+  - Discusses the importance of transparent reporting and the utility of systematic reviews in verifying evidence basis of current practices.
+  - Reviews various systematic reviews and meta-analyses focused on different aspects of medical technology and patient care.
+  - Highlights the rapid development and complexity within the field of evidence synthesis, noting the diversity and overlap of methodologies.
+  - Provides an overview of various measurement instruments and reporting guidelines used in healthcare research.
+
+- **CORRESPONDENCE**
+  - Section appears to be empty or lacks detailed content.

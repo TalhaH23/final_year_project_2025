@@ -1,30 +1,25 @@
 
 
-🔹 Chunk 1: Spices
-----------------------------------------
-Spices
-Spices at a central market in Agadir,
-Morocco
-A group of Indian herbs and spices in
-bowls
-Spices of Saúde flea market, São
-Paulo, Brazil
-============================================================
-
-🔹 Chunk 2: Spice
+🔹 Chunk 1: Spice
 ----------------------------------------
 Spice
 A spice is a seed, fruit, root, bark, or other plant substance
+============================================================
+
+🔹 Chunk 2: Spices
+----------------------------------------
+Spices
 primarily used for flavoring or coloring food. Spices are
 distinguished from herbs, which are the leaves, flowers, or stems of
 plants used for flavoring or as a garnish. Spices are sometimes used
 in medicine, religious rituals, cosmetics, or perfume production.
 For example, vanilla is commonly used as an ingredient in
-fragrance manufacturing.[1]
+fragrance
+manufacturing.[1]
 A spice may be available in several forms: fresh, whole-dried, or
 pre-ground dried. Generally, spices are dried. Spices may be
-ground into a powder for convenience. A whole dried spice has the
-longest shelf life, so it can be purchased and stored in larger
+ground into a powder for convenience. A whole dried spice has the Spices at a central market in Agadir,
+longest shelf life, so it can be purchased and stored in larger Morocco
 amounts, making it cheaper on a per-serving basis. A fresh spice,
 such as ginger, is usually more flavorful than its dried form, but
 fresh spices are more expensive and have a much shorter shelf life.
@@ -35,31 +30,41 @@ whole and in powder form.
 As of 2019, there is not enough clinical evidence to indicate that
 consuming spices affects human health.[2]
 India contributes to 75% of global spice production. This is
-reflected culturally through their cuisine; historically, the spice trade
-developed throughout the Indian subcontinent as well as in East
+reflected culturally through their cuisine; historically, the spice trade A group of Indian herbs and spices in
+developed throughout the Indian subcontinent as well as in East bowls
 Asia and the Middle East. Europe's demand for spices was among
 the economic and cultural factors that encouraged exploration in
 the early modern period.
-The word spice originated in Middle English[3] which came from
-the Old French words espece, espis(c)e, and espis(c)e.[4]
-According to the Middle English Dictionary, the Old French words
-came from Anglo-French spece;[4] according to Merriam Webster,
 ============================================================
 
 🔹 Chunk 3: Etymology
 ----------------------------------------
 Etymology
+The word spice originated in Middle English[3] which came from Spices of Saúde flea market, São
+the Old French words espece, espis(c)e, and espis(c)e.[4] Paulo, Brazil
+According to the Middle English Dictionary, the Old French words
+came from Anglo-French spece;[4] according to Merriam Webster,
 the Old-French words came from Anglo-French espece, and espis.[3] Both publications agree that the
 Anglo-French words are derived from Latin species.[3][4] Middle English spice had its first known use as a
 noun in the 13th century.[3]
+============================================================
+
+🔹 Chunk 4: History
+----------------------------------------
+History
+============================================================
+
+🔹 Chunk 5: Early history
+----------------------------------------
+Early history
 The spice trade developed throughout the Indian subcontinent[5] and Middle East by 2000 BCE with
 cinnamon and black pepper, and in East Asia with herbs and pepper. The Egyptians used herbs for cuisine
 and mummification. Their demand for exotic spices and herbs helped stimulate world trade.
-Cloves were used in Mesopotamia by 1700 BCE.[note 1] The earliest written records of spices come from
+Cloves were used in Mesopotamia by 1700 BCE.[note 1] The earliest written records of spices come from
 ancient Egyptian, Chinese, and Indian cultures. The Ebers Papyrus from early Egypt dating from 1550
 BCE describes some eight hundred different herbal medicinal remedies and numerous medicinal
 procedures.[9]
-By 1000 BCE, medical systems based upon herbs could be found in China, Korea, and India. Early uses
+By 1000 BCE, medical systems based upon herbs could be found in China, Korea, and India. Early uses
 were connected with magic, medicine, religion, tradition, and preservation.[10]
 Indonesian merchants traveled around China, India, the Middle East, and the east coast of Africa. Arab
 merchants facilitated the routes through the Middle East and India. This resulted in the Egyptian port city of
@@ -75,6 +80,11 @@ The ancient Indian epic Ramayana mentions cloves.
 Historians believe that nutmeg, which originates from the Banda Islands in Southeast Asia, was introduced
 to Europe in the 6th century BCE.[11] The Romans had cloves in the 1st century CE, as Pliny the Elder
 wrote about them.[12]
+============================================================
+
+🔹 Chunk 6: Middle Ages
+----------------------------------------
+Middle Ages
 Spices were among the most demanded and expensive products available in Europe in the Middle Ages,[5]
 the most common being black pepper, cinnamon (and the cheaper alternative cassia), cumin, nutmeg,
 ginger, and cloves. Given medieval medicine's main theory of humorism, spices and herbs were
@@ -84,40 +94,27 @@ spices in the Middle Ages, believing spices to be from and a connection to "para
 the European aristocracy's demand for spice comes from the King of Aragon, who invested substantial
 resources into bringing back spices to Spain in the 12th century. He was specifically looking for spices to
 put in wine and was not alone among European monarchs at the time to have such a desire for spice.[14]
-============================================================
-
-🔹 Chunk 4: History
-----------------------------------------
-History
-============================================================
-
-🔹 Chunk 5: Early history
-----------------------------------------
-Early history
-============================================================
-
-🔹 Chunk 6: Middle Ages
-----------------------------------------
-Middle Ages
-"The Mullus" harvesting pepper.
-Illustration from a French edition of
-The Travels of Marco Polo.
-Turmeric powder, mustard seeds,
-chili powder, cumin seeds
 Spices were all imported from plantations in Asia and Africa, which
 made them expensive. From the 8th until the 15th century, the
 Republic of Venice held a monopoly on spice trade with the Middle
 East, using this position to dominate the neighboring Italian
 maritime republics and city-states. The trade made the region rich. It
-has been estimated that around 1,000 tons of pepper and 1,000 tons
+has been estimated that around 1,000 tons of pepper and 1,000 tons
 of other common spices were imported into Western Europe each
 year during the Late Middle Ages. The value of these goods was
-the equivalent of a yearly supply of grain for 1.5 million people.[15]
+the equivalent of a yearly supply of grain for 1.5 million people.[15] "The Mullus" harvesting pepper.
+Illustration from a French edition of
 The most exclusive was saffron, used as much for its vivid yellow-
+The Travels of Marco Polo.
 red color as for its flavor. Spices that have now fallen into obscurity
 in European cuisine include grains of paradise, a relative of
 cardamom which mostly replaced pepper in late medieval north
 French cooking, long pepper, mace, spikenard, galangal, and cubeb.[16]
+============================================================
+
+🔹 Chunk 7: Early modern period
+----------------------------------------
+Early modern period
 Spain and Portugal were interested in seeking new routes to trade in spices and other valuable products
 from Asia. The control of trade routes and the spice-producing regions were the main reasons that
 Portuguese navigator Vasco da Gama sailed to India in 1499.[8] When da Gama discovered the pepper
@@ -133,90 +130,44 @@ becoming the viceroy of the Indies, he took Goa in India in 1510, and Malacca on
 With the discovery of the New World came new spices, including allspice, chili peppers, vanilla, and
 chocolate. This development kept the spice trade, with America as a latecomer with its new seasonings,
 profitable well into the 19th century.
-Spices are primarily used as food flavoring or to create variety.[18]
-They are also used to perfume cosmetics and incense. At various
-periods, many spices were used in herbal medicine. Finally, since
-they are expensive, rare, and exotic commodities, their conspicuous
-consumption has often been a symbol of wealth and social class.[16]
-It is often claimed that spices were used either as food preservatives
-or to mask the taste of spoiled meat, especially in the European
-Middle Ages.[16][19] This is false.[20][21][22][16] In fact, spices are
-rather ineffective as preservatives as compared to salting, smoking,
-============================================================
-
-🔹 Chunk 7: Early modern period
-----------------------------------------
-Early modern period
 ============================================================
 
 🔹 Chunk 8: Function
 ----------------------------------------
 Function
+Spices are primarily used as food flavoring or to create variety.[18]
+They are also used to perfume cosmetics and incense. At various
+periods, many spices were used in herbal medicine. Finally, since
+they are expensive, rare, and exotic commodities, their conspicuous
+consumption has often been a symbol of wealth and social class.[16]
 ============================================================
 
 🔹 Chunk 9: Preservative claim
 ----------------------------------------
 Preservative claim
-The most popular explanation for
-the love of spices in the Middle
-Ages is that they were used to
-preserve meat from spoiling, or to
-cover up the taste of meat that
-had already gone off. This
-compelling 
-but 
-false 
-idea
-constitutes something of an urban
-legend, a story so instinctively
+Turmeric powder, mustard seeds,
+It is often claimed that spices were used either as food preservatives chili powder, cumin seeds
+or to mask the taste of spoiled meat, especially in the European
+Middle Ages.[16][19] This is false.[20][21][22][16] In fact, spices are
+rather ineffective as preservatives as compared to salting, smoking,
+pickling, or drying, and are ineffective in covering the taste of The most popular explanation for
+spoiled meat.[16] Moreover, spices have always been the love of spices in the Middle
+comparatively expensive: in 15th century Oxford, a whole pig cost Ages is that they were used to
+about the same as a pound of the cheapest spice, pepper.[16] There preserve meat from spoiling, or to
+is also no evidence of such use from contemporary cookbooks: cover up the taste of meat that
+"Old cookbooks make it clear that spices weren't used as a had already gone off. This
+preservative. They typically suggest adding spices toward the end compelling but false idea
+of the cooking process, where they could have no preservative constitutes something of an urban
+effect whatsoever."[23] Indeed, Cristoforo di Messisbugo legend, a story so instinctively
 attractive that mere fact seems
-unable to wipe it out... Anyone
-who could afford spices could
-easily find meat fresher than what
-city dwellers today buy in their
-local supermarket.[16]
-A plate of Indian herbs and spices
-pickling, or drying, and are ineffective in covering the taste of
-spoiled 
-meat.[16] 
-Moreover, 
-spices 
-have 
-always 
-been
-comparatively expensive: in 15th century Oxford, a whole pig cost
-about the same as a pound of the cheapest spice, pepper.[16] There
-is also no evidence of such use from contemporary cookbooks:
-"Old cookbooks make it clear that spices weren't used as a
-preservative. They typically suggest adding spices toward the end
-of the cooking process, where they could have no preservative
-effect whatsoever."[23] Indeed, Cristoforo di Messisbugo
 suggested in the 16th century that pepper may speed up
-spoilage.[23]
-Though some spices have antimicrobial properties in vitro,[24]
+spoilage.[23] unable to wipe it out... Anyone
+who could afford spices could
+Though some spices have antimicrobial properties in vitro,[24] easily find meat fresher than what
+city dwellers today buy in their
 pepper—by far the most common spice—is relatively ineffective,
-and in any case, salt, which is far cheaper, is also far more
+and in any case, salt, which is far cheaper, is also far more local supermarket.[16]
 effective.[23]
-Seeds, such as fennel, mustard, nutmeg, and black
-pepper
-Fruits, such as Cayenne pepper and Chimayo pepper
-Arils, such as mace (part of nutmeg plant fruit)
-Barks, such as True Cinnamon and cassia
-Flower buds, such as cloves
-Stigmas, such as saffron
-Roots and rhizomes, such as turmeric, ginger and
-galangal
-Resins, such as asafoetida
-Advieh (Iran)
-Baharat (Arab world, and the Middle East in general)
-Berbere (Ethiopia, Eritrea and Somalia)
-Bumbu (Indonesia)
-Cajun (United States)
-Chaat masala (Indian subcontinent)
-Chili powder and crushed red pepper (Cayenne, Chipotle, Jalapeño, New Mexico, Tabasco,
-and other cultivars)
-Curry powder
-Five-spice powder (China)
 ============================================================
 
 🔹 Chunk 10: Classification and types
@@ -232,15 +183,32 @@ Culinary herbs and spices
 🔹 Chunk 12: Botanical basis
 ----------------------------------------
 Botanical basis
+Seeds, such as fennel, mustard, nutmeg, and black
+pepper
+Fruits, such as Cayenne pepper and Chimayo pepper
+A plate of Indian herbs and spices
+Arils, such as mace (part of nutmeg plant fruit)
+Barks, such as True Cinnamon and cassia
+Flower buds, such as cloves
+Stigmas, such as saffron
+Roots and rhizomes, such as turmeric, ginger and
+galangal
+Resins, such as asafoetida
 ============================================================
 
 🔹 Chunk 13: Common spice mixtures
 ----------------------------------------
 Common spice mixtures
-A shelf of common spices for a
-home kitchen in Canada or the
-United States
-Pepper mill
+Advieh (Iran)
+Baharat (Arab world, and the Middle East in general)
+Berbere (Ethiopia, Eritrea and Somalia)
+Bumbu (Indonesia)
+Cajun (United States)
+Chaat masala (Indian subcontinent)
+Chili powder and crushed red pepper (Cayenne, Chipotle, Jalapeño, New Mexico, Tabasco,
+and other cultivars)
+Curry powder
+Five-spice powder (China)
 Garam masala (Indian subcontinent)
 Harissa (North Africa)
 Hawaij (Yemen)
@@ -258,6 +226,11 @@ Speculaas (Belgium and Netherlands)
 Thuna Paha (Sri Lanka)
 Vegeta (Croatia)
 Za'atar (Middle East)
+============================================================
+
+🔹 Chunk 14: Handling
+----------------------------------------
+Handling
 For ground spices, to grind a whole spice, the
 classic tool is mortar and pestle. Less labor-
 intensive tools are more common now: a
@@ -266,8 +239,10 @@ small amounts; a coffee grinder[note 2] is
 useful for larger amounts. A frequently used
 spice such as black pepper may merit storage
 in its own hand grinder or mill.
-The flavor of a spice is derived in part from
-compounds (volatile oils) that oxidize or
+A shelf of common spices for a
+The flavor of a spice is derived in part from home kitchen in Canada or the
+Pepper mill
+compounds (volatile oils) that oxidize or United States
 evaporate when exposed to air. Grinding a
 spice greatly increases its surface area and so increases the rates of
 oxidation and evaporation. Thus, the flavor is maximized by storing a spice whole and grinding when
@@ -279,67 +254,9 @@ flavors from a spice take time to infuse into the food so spices are added early
 to herbs which are usually added late in preparation.[25]
 ============================================================
 
-🔹 Chunk 14: Handling
-----------------------------------------
-Handling
-============================================================
-
 🔹 Chunk 15: Salmonella contamination
 ----------------------------------------
 Salmonella contamination
-Spices and herbs at a shop in Goa,
-India
-Top Spice Producing Countries
-(in metric tonnes)
-Rank
-Country
-2010
-2011
-1
-India
-1,474,900
-1,525,000
-2
-Bangladesh
-128,517
-139,775
-3
-Turkey
-107,000
-113,783
-4
-China
-90,000
-95,890
-5
-Pakistan
-53,647
-53,620
-6
-Iran
-18,028
-21,307
-7
-Nepal
-20,360
-20,905
-8
-Colombia
-16,998
-19,378
-9
-Ethiopia
-27,122
-17,905
-10
-Sri Lanka
-8,293
-8,438
-—
-World
-1,995,523
-2,063,472
-Source: UN Food & Agriculture Organization[30]
 A study by the Food and Drug Administration of shipments of spices to the United States during fiscal
 years 2007–2009 showed about 7% of the shipments were contaminated by Salmonella bacteria, some of it
 antibiotic-resistant.[26] As most spices are cooked before being served salmonella contamination often has
@@ -351,6 +268,23 @@ irradiation is said to minimise this risk.[28][29]
 🔹 Chunk 16: Production
 ----------------------------------------
 Production
+Top Spice Producing Countries
+(in metric tonnes)
+Rank Country 2010 2011
+1 India 1,474,900 1,525,000
+2 Bangladesh 128,517 139,775
+3 Turkey 107,000 113,783
+4 China 90,000 95,890
+Spices and herbs at a shop in Goa,
+5 Pakistan 53,647 53,620
+India
+6 Iran 18,028 21,307
+7 Nepal 20,360 20,905
+8 Colombia 16,998 19,378
+9 Ethiopia 27,122 17,905
+10 Sri Lanka 8,293 8,438
+— World 1,995,523 2,063,472
+Source: UN Food & Agriculture Organization[30]
 ============================================================
 
 🔹 Chunk 17: Standardization

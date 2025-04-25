@@ -24,32 +24,53 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=100
 
 # Prompts
 map_prompt = PromptTemplate(
-    input_variables=["text"],
+    input_variables=["title", "text"],
     template="""
-    Summarize the following document section:
+Summarize the following document section.
 
-    {text}
+Return your answer in the following format:
+Section Title: {title}
 
-    SUMMARY:
-    """
+Summary:
+- Bullet point 1
+- Bullet point 2
+- Bullet point 3
+- ...
+
+Here is the section content:
+
+{text}
+"""
 )
 
 reduce_prompt = PromptTemplate(
     input_variables=["text"],
     template="""
-    Given these partial summaries, write a final comprehensive summary:
+You are given structured summaries. Organize them into a nested bullet list:
+- Main sections at top level.
+- Subsections nested under them when appropriate.
+- Use only the Section Titles provided.
 
-    {text}
+Here are the summaries:
 
-    FINAL SUMMARY:
-    """
+{text}
+"""
 )
+
 
 # Map-Reduce Chain
 map_chain = map_prompt | llm
 reduce_chain = reduce_prompt | llm
 map_reduce_chain = (
-    RunnableLambda(lambda docs: [map_chain.invoke({"text": doc.page_content}).content for doc in docs])
+    RunnableLambda(
+        lambda docs: [
+            map_chain.invoke({
+                "title": doc.metadata.get("title", "Untitled"),
+                "text": doc.page_content
+            }).content
+            for doc in docs
+        ]
+    )
     | RunnableLambda(lambda summaries: {"text": "\n\n".join(summaries)})
     | reduce_chain
 )
@@ -95,5 +116,7 @@ def process_single_pdf(file_path):
         print(f"Error while processing {file_path}: {str(e)}")
 
 # Parallel processing
-with ThreadPoolExecutor(max_workers=4) as executor:
-    executor.map(process_single_pdf, pdf_files)
+# with ThreadPoolExecutor(max_workers=4) as executor:
+#     executor.map(process_single_pdf, pdf_files)
+
+process_single_pdf(pdf_files[1])
