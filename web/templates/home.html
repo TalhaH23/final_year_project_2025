@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Uploaded PDFs</h1>
+
+{% if pdfs %}
+<ul class="list-group">
+  {% for pdf in pdfs %}
+    <li class="list-group-item">
+      <a href="{{ url_for('view_pdf', filename=pdf) }}">{{ pdf }}</a>
+    </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No PDFs uploaded yet.</p>
+{% endif %}
+{% endblock %}

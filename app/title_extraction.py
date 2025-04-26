@@ -66,10 +66,6 @@ def extract_unstructured_titles(file_path):
     return titles  # Keep order
 
 # ---------- Step 3: Compare and Print ----------
-pdf_folder = "PDFs"
-pdf_files = [os.path.join(pdf_folder, f) for f in os.listdir(pdf_folder) if f.endswith(".pdf")]
-# file_path = pdf_files[0]
-
 
 def section_headers(file_path):
     mupdf_titles = extract_mupdf_titles(file_path)
@@ -78,13 +74,12 @@ def section_headers(file_path):
     # Intersect: retain unstructured order
     intersecting_titles = [title for title in unstructured_titles if title in mupdf_titles]
 
-    print("✅ Titles detected by BOTH methods (in document order):\n")
-    for title in intersecting_titles:
-        print(f"📌 {title}")
+    # print("✅ Titles detected by BOTH methods (in document order):\n")
+    # for title in intersecting_titles:
+    #     print(f"📌 {title}")
         
     return intersecting_titles
 
-# section_headers(file_path)
 
 def get_title_positions_by_lines(full_text: str, titles: List[str]) -> List[tuple]:
     positions = []
@@ -103,7 +98,6 @@ def get_title_positions_by_lines(full_text: str, titles: List[str]) -> List[tupl
 
     return positions
 
-# titles = section_headers(file_path)
 
 def chunk_document_by_titles(file_path, titles: List[str], chunk_size: int, chunk_overlap: int) -> List[Document]:
 
@@ -130,7 +124,7 @@ def chunk_document_by_titles(file_path, titles: List[str], chunk_size: int, chun
     )
 
     full_text = full_text.strip()
-    print(full_text[:5000])  # optional debug
+    # print(full_text[:5000])  # optional debug
     
     title_positions = get_title_positions_by_lines(full_text, titles)
     title_positions.sort(key=lambda x: x[1])
@@ -140,9 +134,9 @@ def chunk_document_by_titles(file_path, titles: List[str], chunk_size: int, chun
 
     for i, (title, start_idx) in enumerate(title_positions):
         context = full_text[start_idx:start_idx+100]  # show 100 chars from the found position
-        print(f"\n🟡 Title: {title}")
-        print(f"Position: {start_idx}")
-        print(f"Context snippet: {context}")
+        # print(f"\n🟡 Title: {title}")
+        # print(f"Position: {start_idx}")
+        # print(f"Context snippet: {context}")
         end_idx = title_positions[i + 1][1] if i + 1 < len(title_positions) else len(full_text)
         section_text = full_text[start_idx:end_idx].strip()
 
@@ -164,5 +158,3 @@ def chunk_document_by_titles(file_path, titles: List[str], chunk_size: int, chun
         # )
 
     return all_chunks
-
-# chunk_document_by_titles(file_path,titles)

@@ -8,3 +8,4 @@ tiktoken==0.9.0
 python-dotenv==1.0.1
 colorama==0.4.6
 pymupdf==1.25.5
+invoke==2.2.0

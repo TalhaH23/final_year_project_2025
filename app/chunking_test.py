@@ -26,8 +26,31 @@ text_splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=100
 map_prompt = PromptTemplate(
     input_variables=["title", "text"],
     template="""
-Summarize the following document section. Ignore references, footnotes, and citations. Focus on the main ideas and key points.
-The section could be a text chunk or sections of a table or data. If it is data then summarize the data in a table format.
+You are a professional summarizer. Your task is to summarize the following document section **only if it contains meaningful academic or scientific content** (such as Introduction, Methods, Results, Discussion, Review Typologies, etc.).
+
+---
+Summarize if:
+- The section has actual scientific discussion, research methodology, results, arguments, or structured narrative text.
+- The section includes tables or data — in that case, summarize the table into a compact text or table format.
+
+---
+Do NOT summarize if:
+- The section is administrative, legal, or irrelevant (e.g., "Correspondence", "Author Contributions", "Open Access", "License", "Competing Interests", "Ethics Approval").
+- The section is extremely short (less than a few meaningful sentences).
+- The section only repeats boilerplate text.
+
+If the section is irrelevant or empty, respond exactly with:
+
+**No summary needed.**
+
+---
+Special Instructions:
+- Ignore references, footnotes, citations, and in-text citation numbers (e.g., "[1]", "(2020)").
+- Focus only on the main ideas and key points.
+- If the section is data or a table, provide a structured short table-style summary.
+- Ignore Open Access, License, or Correspondence labels unless they contain real academic content.
+
+---
 
 Return your answer in the following format:
 Section Title: {title}
@@ -38,7 +61,7 @@ Summary:
 - Bullet point 3
 - ...
 
-Here is the section content:
+Here is the section content to summarize:
 
 {text}
 """
@@ -125,4 +148,4 @@ def process_single_pdf(file_path):
 # with ThreadPoolExecutor(max_workers=4) as executor:
 #     executor.map(process_single_pdf, pdf_files)
 
-process_single_pdf(pdf_files[0])
+process_single_pdf(pdf_files[1])

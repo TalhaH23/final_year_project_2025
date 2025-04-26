@@ -1,7 +1,7 @@
 import os
 import pinecone
 from langchain.vectorstores.pinecone import Pinecone
-from embeddings.openai import embeddings
+from app.embeddings.openai import embeddings
 from dotenv import load_dotenv
 
 load_dotenv()

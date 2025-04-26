@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Systematic Review Summaries</title>
+</head>
+<body>
+<h1>Systematic Review Summaries</h1>
+
+<h2>Abstract</h2>
+<ul>
+  <li>Systematic reviews are fundamental to evidence-based healthcare.</li>
+  <li>The methodology of systematic reviews has evolved to address diverse questions in health and medical sciences.</li>
+  <li>This paper discusses the importance of selecting the appropriate type of systematic review based on the research question or priority, a concept often overlooked by novice authors and in existing literature.</li>
+</ul>
+
+<h2>Introduction</h2>
+<ul>
+  <li>Systematic reviews are considered the gold standard for gathering, evaluating, and summarizing the best available evidence related to clinical questions.</li>
+  <li>They provide a solid evidence base that supports the development of reliable clinical guidelines and aids in clinical decision-making.</li>
+  <li>Systematic reviews follow a structured research process with rigorous methods to ensure the reliability and relevance of their results to end users, making them a cornerstone of evidence-based healthcare.</li>
+  <li>Methodologies in healthcare have significantly evolved since their introduction in the 1970s and 1980s.</li>
+  <li>The ongoing evolution of these methodologies has led to confusion among researchers, both novice and experienced, in synthesizing various forms of evidence.</li>
+  <li>Challenges are primarily related to the diversity of review types and the terminology used to describe them, influenced by the types of questions posed and the evidence used to address them.</li>
+  <li>Systematic reviews traditionally focus on assessing the effectiveness of health interventions.</li>
+  <li>These reviews primarily analyze and summarize findings from randomized controlled trials (RCTs).</li>
+  <li>Health professionals consider a variety of research approaches beyond just measuring the effectiveness of interventions or therapies.</li>
+  <li>Pearson and colleagues advocate for a pluralistic approach to evidence in health care, recognizing that not all questions are answered through studies focused solely on effectiveness.</li>
+  <li>The evolution and advancement of systematic review methods reflect a broader scope of questions that need answers to provide optimal evidence-based care.</li>
+  <li>Systematic reviews traditionally focus on the effectiveness of medical interventions but have expanded to include various types addressing different healthcare needs.</li>
+  <li>The diversity of systematic review types can be confusing for novice reviewers.</li>
+  <li>Novice reviewers often inappropriately apply the PICO format (population, intervention, comparator, outcome) to questions not suited for this framework.</li>
+  <li>Discusses the challenge of fitting research questions into the PICO format (population, intervention, comparator, outcome), which may not suit all types of systematic reviews such as diagnostic test accuracy or prognosis.</li>
+  <li>Introduces the aim of the article, which is to propose a typology of systematic review types that align with different review questions, aiding novice reviewers, editors, peer-reviewers, and policymakers.</li>
+  <li>Claims the novelty of the proposed classification system for systematic reviews as the first of its kind.</li>
+  <li>Systematic reviews of etiology and risk are crucial for guiding healthcare planning and resource allocation, especially for decision-makers in health policy and prevention strategies.</li>
+  <li>The primary goal of these reviews is to assess the presence and extent of a relationship between an exposure and a health outcome.</li>
+  <li>The PEO mnemonic is recommended for structuring the review question, which should detail the exposure, disease, symptom, or health condition of interest, the affected populations, and the relevant context, location, and time frame.</li>
+  <li>Highlights the importance of formulating a specific, focused question for systematic reviews to guide search terms, inclusion and exclusion criteria, and data interpretation.</li>
+  <li>Discusses the updated typology for systematic reviews reflecting current practices, making it feasible to apply systematic review processes to nearly any question.</li>
+  <li>Emphasizes the challenges faced by novice researchers in determining the type of review needed, conceptualizing the review question, and selecting appropriate methods for analysis and synthesis.</li>
+  <li>Stresses the critical importance of well-formed review questions in systematic reviews.</li>
+  <li>The popularity of systematic reviews has led to the development of various evidence review processes over the past three decades.</li>
+  <li>Types of reviews include integrative reviews, scoping reviews, evidence maps, realist syntheses, rapid reviews, umbrella reviews, mixed methods reviews, and concept analyses.</li>
+  <li>Typologies of these review types serve as useful references for researchers, policy makers, and funders in selecting an appropriate review approach.</li>
+  <li>The focus of the discussed article is specifically on systematic review questions, not on describing each evidence synthesis method in detail.</li>
+  <li>Psychometric systematic reviews focus on assessing the quality and characteristics of health measurement instruments.</li>
+  <li>These reviews help determine the most suitable tool for use in practice based on validity, reliability, responsiveness, and other properties.</li>
+  <li>Such reviews can target a single measurement instrument, commonly used instruments for a specific construct, all instruments measuring a particular construct in a specific population, or all instruments used in a specific population.</li>
+</ul>
+
+<h2>Results</h2>
+<ul>
+  <li>Identifying the question and choosing the appropriate type of systematic review is crucial in the evidence-based healthcare paradigm, influencing the entire review process and other aspects of the evidence cycle.</li>
+  <li>This step is often neglected by novice reviewers and those unfamiliar with the various types of reviews available.</li>
+  <li>The goal is to offer a typology of review types and outline essential elements to consider during the question development phase for each review type.</li>
+</ul>
+
+<h2>Conclusions</h2>
+<ul>
+  <li>A typology of various systematic review methodologies is proposed.</li>
+  <li>Review types are defined and aligned with corresponding questions and inclusion criteria.</li>
+  <li>The goal is to offer clear guidance for both novice and experienced reviewers and establish a unified typology for review types.</li>
+</ul>
+
+<h2>Review Typology</h2>
+<ul>
+  <li>Defines a systematic review as a robust, reproducible, structured critical synthesis of existing research.</li>
+  <li>Excludes other evidence synthesis approaches like literature reviews, evidence maps, rapid reviews, integrative reviews, scoping, and umbrella reviews unless they meet the systematic review criteria.</li>
+  <li>Identifies ten different types of systematic review foci, each with key elements for formulating a question specific to the review type.</li>
+</ul>
+
+<h2>Systematic Reviews</h2>
+<ul>
+  <li>Systematic reviews are predominantly focused on assessing the effectiveness of interventions or therapies.</li>
+  <li>Effectiveness refers to the degree to which an intervention achieves its intended effect when used as intended.</li>
+  <li>The PICO approach is commonly used for developing research questions in systematic reviews, which includes considerations of Population, Intervention, Comparator, and Outcomes.</li>
+  <li>Key factors to consider in systematic reviews include demographic and socioeconomic aspects of the population, variations in intervention dosage/intensity, mode and frequency of delivery, type of comparator (active or passive), and both primary and secondary outcomes including potential benefits and harms and their measurement methods.</li>
+</ul>
+
+<h2>Experiential (Qualitative) Reviews</h2>
+<ul>
+  <li>Focus on analyzing human experiences and cultural and social phenomena.</li>
+  <li>Examine the engagement between participants and interventions, emphasizing the perspectives of individuals within a larger phenomenon.</li>
+  <li>Useful for exploring and explaining the effectiveness or lack thereof of interventions from a person-centered perspective.</li>
+  <li>Help in understanding why certain interventions are not adopted despite proven effectiveness.</li>
+  <li>Provide insights into patient experiences, aiding health professionals in improving care delivery.</li>
+</ul>
+
+<h2>Key Concepts in Qualitative Research</h2>
+<ul>
+  <li>The mnemonic PICo is utilized to develop research questions in qualitative studies, focusing on the phenomenon of interest without the need for outcomes or comparators.</li>
+  <li>Phenomenon of interest refers to experiences, events, or processes under study, such as responses to pain or coping mechanisms in breast cancer.</li>
+  <li>Context in qualitative research varies based on the review's objectives and may include cultural, geographic, racial, gender-specific factors, and the setting (e.g., acute care, primary healthcare, community).</li>
+</ul>
+
+<h2>Research Questions and Objectives</h2>
+<ul>
+  <li>Evaluates the cost-effectiveness of self-monitoring blood glucose strategies in type 2 diabetes within high-income countries, focusing on economic impacts.</li>
+  <li>Investigates the prevalence and incidence of claustrophobia or claustrophobic reactions in adult patients undergoing MRI, aiming to understand its commonality and triggers.</li>
+  <li>Assesses the diagnostic accuracy of nutritional tests by examining their sensitivity and reference comparisons, enhancing understanding of their effectiveness in medical settings.</li>
+  <li>Evaluates the sensitivity and specificity of the Malnutrition Screening Tool and the Patient Generated Subjective Global Assessment in diagnosing undernutrition among colorectal cancer patients.</li>
+  <li>Investigates the

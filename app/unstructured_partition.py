@@ -8,7 +8,7 @@ pdf_files = [os.path.join(pdf_folder_path, f) for f in os.listdir(pdf_folder_pat
 # docs = PyMuPDFLoader(pdf_files[0]).load()
 
 # Process the PDF
-elements = partition_pdf(filename=pdf_files[0], strategy="hi_res")
+elements = partition_pdf(filename=pdf_files[1], strategy="hi_res")
 
 # Print each element's category and preview of its text
 for i, el in enumerate(elements):
