@@ -33,7 +33,6 @@ def create_app():
                     file.save(filepath)
                     filepaths.append(filepath)
 
-            # Now process all PDFs in parallel!
             with ThreadPoolExecutor(max_workers=4) as executor:
                 executor.map(generate_summary, filepaths)
 
@@ -63,7 +62,6 @@ def create_app():
     return app
 
 
-# Helper to generate summary
 def generate_summary(file_path):
     summary_text = process_single_pdf(file_path)
     pdf_filename = os.path.basename(file_path)

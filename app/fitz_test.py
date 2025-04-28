@@ -11,12 +11,10 @@ def int_to_rgb(color_int):
 def is_bold(font_name):
     return "Bold" in font_name or "bold" in font_name or "BD" in font_name or font_name.endswith(".B")
 
-# Load PDF
 pdf_folder_path = "PDFs"
 pdf_files = [os.path.join(pdf_folder_path, f) for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
 doc = fitz.open(pdf_files[0])
 
-# Step 1: Detect most common font size (body text size)
 font_sizes = set()
 for page in doc:
     for block in page.get_text("dict")["blocks"]:
@@ -33,7 +31,6 @@ print("🔠 Top 5 Largest Font Sizes in the Document:")
 for size in top_5_largest:
     print(f"• {size}")
 
-# Step 2: Detect headers
 print("\n📄 Detected Headers:\n")
 
 for page_num, page in enumerate(doc, start=1):
@@ -44,7 +41,6 @@ for page_num, page in enumerate(doc, start=1):
                 if not text:
                     continue
                 
-
                 font = span.get("font", "")
                 size = round(span["size"], 1)
                 color = int_to_rgb(span["color"])

@@ -1,15 +1,16 @@
 import os
-import pinecone
-from langchain.vectorstores.pinecone import Pinecone
+from pinecone import Pinecone
+from langchain_community.vectorstores import Pinecone as LangchainPinecone
 from app.embeddings.openai import embeddings
 from dotenv import load_dotenv
 
 load_dotenv()
 
-
-pinecone.Pinecone(
-    api_key=os.getenv("PINECONE_API_KEY"),
-    environment=os.getenv("PINECONE_ENV_NAME"),
+pc = Pinecone(
+    api_key=os.getenv("PINECONE_API_KEY")
 )
 
-vector_store = Pinecone.from_existing_index(os.getenv("PINECONE_INDEX_NAME"), embeddings)
+vector_store = LangchainPinecone.from_existing_index(
+    os.getenv("PINECONE_INDEX_NAME"),
+    embeddings
+)

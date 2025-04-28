@@ -32,11 +32,9 @@ def refine_summary(docs):
         """
     )
 
-    # Start with initial chunk
     initial_input = {"text": docs[0].page_content}
     summary = llm.invoke(initial_prompt.format_prompt(**initial_input).to_string()).content
 
-    # Refine with each subsequent chunk
     for doc in docs[1:]:
         refine_input = {
             "existing_summary": summary,
