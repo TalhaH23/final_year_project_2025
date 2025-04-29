@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from concurrent.futures import ThreadPoolExecutor
+import pymupdf
 from langchain_openai import ChatOpenAI
 from langchain_community.document_loaders import PyMuPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
@@ -14,87 +15,104 @@ load_dotenv()
 # pdf_folder_path = "PDFs"
 # pdf_files = [os.path.join(pdf_folder_path, f) for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
 
-llm = ChatOpenAI(model="gpt-4-turbo", temperature=0, max_tokens=4000)
+map_llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0, max_tokens=4000)
+reduce_llm = ChatOpenAI(model="gpt-4-turbo", temperature=0, max_tokens=4000)
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=800, chunk_overlap=100)
 
 map_prompt = PromptTemplate(
-    input_variables=["title", "text"],
+    input_variables=["section_title", "text"],
     template="""
-You are a professional summarizer. Your task is to summarize the following document section **only if it contains meaningful academic or scientific content** (such as Introduction, Methods, Results, Discussion, Review Typologies, etc.).
+You are a professional academic summarizer.
 
----
-Summarize if:
-- The section has actual scientific discussion, research methodology, results, arguments, or structured narrative text.
-- The section includes tables or data — in that case, summarize the table into a compact text or table format.
+Summarize the following document section ONLY if it contains meaningful academic or scientific content.
 
----
-Do NOT summarize if:
-- The section is administrative, legal, or irrelevant (e.g., "Correspondence", "Author Contributions", "Open Access", "License", "Competing Interests", "Ethics Approval").
-- The section is extremely short (less than a few meaningful sentences).
-- The section only repeats boilerplate text.
+Summarization rules:
+- Limit to 3-6 bullet points maximum, no matter how long the section is.
+- Focus ONLY on the main ideas and key takeaways.
+- Do NOT list specific study examples, minor variations, or detailed methodologies unless crucial.
+- Prioritize general principles, definitions, findings, or conclusions.
+- Ignore references, citations, and numeric citation markers (e.g., [1], (2020)).
 
-If the section is irrelevant or empty, do not include it in the summary.
+Formatting rules:
+- Output ONLY raw HTML tags and content.
+- DO NOT use Markdown, DO NOT use triple backticks (```), DO NOT wrap content in code fences.
+- Your output must start directly with a <h2> tag.
+- Then use a <ul> list with 3-6 <li> bullet points under each heading.
 
----
-Special Instructions:
-- Ignore references, footnotes, citations, and in-text citation numbers (e.g., "[1]", "(2020)").
-- Focus only on the main ideas and key points.
-- If the section is data or a table, provide a structured short table-style summary.
-- Ignore Open Access, License, or Correspondence labels unless they contain real academic content.
+Here is the section title and content:
 
----
-Return your answer in HTML format like this:
+Section title: {section_title}
 
-<h2>{title}</h2>
-<ul>
-  <li>Bullet point 1</li>
-  <li>Bullet point 2</li>
-  <li>Bullet point 3</li>
-</ul>
-
-IMPORTANT: Do not include Markdown code fences like ```html. Return only the pure HTML content.
-
-Here is the section content to summarize:
+Content:
 
 {text}
 """
 )
+
 
 reduce_prompt = PromptTemplate(
-    input_variables=["text"],
+    input_variables=["text", "main_title"],
     template="""
-You are given multiple HTML-formatted summaries.  
-Organize them into a nested HTML bullet list, grouped based on section titles::
+You are a document organizer. You are given multiple HTML-formatted summaries of a document's sections.
 
-- At the top, display the main document title inside `<h1>`.
-- Use `<h2>` for main sections.
-- Use `<ul><li>` for bullet points under each section.
-- Nest subsections inside the appropriate parent section, if needed.
-- Discard any sections that say "**No summary needed.**"
-- Keep the final output fully in valid HTML format, ready to be rendered in a webpage.
-- IMPORTANT: Do not include Markdown code fences like ```html. Return only the pure HTML content.
+Instructions:
 
-Here are the summaries:
+- Group the summaries based on section titles.
+- Maintain the original order of sections based on their appearance.
+- Do not alter, merge, or invent new section titles.
+- Only output raw HTML tags and content.
+- DO NOT use Markdown, DO NOT use triple backticks (```), DO NOT wrap content in code fences.
+- Display the main document title {main_title} at the top inside a <h1> tag.
+- Use <h2> for each section title.
+- Under each <h2> heading, use a <ul> with <li> bullet points.
+- Output should be fully valid HTML, ready to render directly in a web page.
+- No additional commentary, explanations, or wrapping in markdown.
+
+Output structure:
+
+<h1>{main_title}</h1>
+
+<h2>First Section Title</h2>
+<ul>
+  <li>Point 1</li>
+  <li>Point 2</li>
+</ul>
+
+<h2>Second Section Title</h2>
+<ul>
+  <li>Point 1</li>
+  <li>Point 2</li>
+</ul>
+
+Summaries:
 
 {text}
 """
 )
 
 
-map_chain = map_prompt | llm
-reduce_chain = reduce_prompt | llm
+
+map_chain = map_prompt | map_llm
+reduce_chain = reduce_prompt | reduce_llm
+
 map_reduce_chain = (
     RunnableLambda(
-        lambda docs: [
-            map_chain.invoke({
-                "title": doc.metadata.get("title", "Untitled"),
-                "text": doc.page_content
-            }).content
-            for doc in docs
-        ]
+        lambda docs: {
+            "summaries": [
+                map_chain.invoke({
+                    "section_title": doc.metadata.get("section_title", "Untitled Section"),
+                    "text": doc.page_content
+                }).content
+                for doc in docs
+            ],
+            "main_title": docs[0].metadata.get("main_title", "Untitled Document")
+        }
     )
-    | RunnableLambda(lambda summaries: {"text": "\n\n".join(summaries)})
+    | RunnableLambda(lambda inputs: {
+        "text": "\n\n".join(inputs["summaries"]),
+        "main_title": inputs["main_title"]
+    })
     | reduce_chain
 )
 
@@ -108,7 +126,7 @@ def process_single_pdf(file_path):
         # print(f"Found {len(titles)} section headers")
         print(f"Extracted Titles for {base_name}")
 
-        chunked_docs = chunk_document_by_titles(file_path, titles, chunk_size=800, chunk_overlap=100)
+        chunked_docs = chunk_document_by_titles(file_path, titles, chunk_size=500, chunk_overlap=50)
         # print(f"Chunked into {len(chunked_docs)} titled sections")
         print(f"Chunked Documents for {base_name}")
         
@@ -117,12 +135,12 @@ def process_single_pdf(file_path):
 
         with open(chunk_output_path, "w", encoding="utf-8") as f:
             for i, doc in enumerate(chunked_docs, 1):
-                f.write(f"\n\n🔹 Chunk {i}: {doc.metadata.get('title', 'Untitled')}\n")
+                f.write(f"\n\n Chunk {i}: {doc.metadata.get('section_title', 'Untitled')}\n")
                 f.write("-" * 40 + "\n")
                 f.write(doc.page_content.strip())
                 f.write("\n" + "=" * 60)
 
-        vector_store.add_documents(chunked_docs)
+        # vector_store.add_documents(chunked_docs)
 
         summary = map_reduce_chain.invoke(chunked_docs).content
         # print(f"\nFinal Summary for {os.path.basename(file_path)}:\n{summary}\n")

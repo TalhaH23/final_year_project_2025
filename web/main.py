@@ -2,7 +2,7 @@ import os
 from concurrent.futures import ThreadPoolExecutor
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
-from app.pdf_summary import process_single_pdf
+from app.chunking_test import process_single_pdf
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 SUMMARY_FOLDER = os.path.join(os.getcwd(), 'summaries')

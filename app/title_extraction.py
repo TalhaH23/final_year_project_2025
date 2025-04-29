@@ -1,6 +1,8 @@
 import os
 import fitz
 import pdfplumber
+import re
+import pymupdf
 from typing import List
 from langchain_core.documents import Document
 from collections import Counter
@@ -8,6 +10,11 @@ from unstructured.partition.pdf import partition_pdf
 from unstructured.documents.elements import Title
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from unstructured.documents.elements import Title, NarrativeText, ListItem, Text
+from tiktoken import encoding_for_model
+
+enc = encoding_for_model("gpt-4")
+def count_tokens(text: str) -> int:
+    return len(enc.encode(text))
 
 def extract_mupdf_titles(file_path):
     doc = fitz.open(file_path)
@@ -91,6 +98,9 @@ def get_title_positions_by_lines(full_text: str, titles: List[str]) -> List[tupl
 
     return positions
 
+def clean_text(text: str) -> str:
+    match = re.search(r"(Bibliography|References|Acknowledgements|Funding)", text, re.IGNORECASE)
+    return text[:match.start()] if match else text
 
 def chunk_document_by_titles(file_path, titles: List[str], chunk_size: int, chunk_overlap: int) -> List[Document]:
 
@@ -107,6 +117,11 @@ def chunk_document_by_titles(file_path, titles: List[str], chunk_size: int, chun
     #             full_text += page_text + "\n"
     
     elements = partition_pdf(filename=file_path, strategy="hi_res")
+    
+    doc = pymupdf.open(file_path)
+    main_title = doc.metadata["title"]
+    print(f"Main Title: {main_title}")
+    doc.close()
 
     full_text = "\n".join(
         el.text.strip()
@@ -115,12 +130,13 @@ def chunk_document_by_titles(file_path, titles: List[str], chunk_size: int, chun
     )
 
     full_text = full_text.strip()
+    full_text = clean_text(full_text)
     # print(full_text[:5000])
     
     title_positions = get_title_positions_by_lines(full_text, titles)
     title_positions.sort(key=lambda x: x[1])
 
-    splitter = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
+    splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(model_name="gpt-4", chunk_size=chunk_size, chunk_overlap=chunk_overlap)
     all_chunks = []
 
     for i, (title, start_idx) in enumerate(title_positions):
@@ -132,14 +148,23 @@ def chunk_document_by_titles(file_path, titles: List[str], chunk_size: int, chun
         section_text = full_text[start_idx:end_idx].strip()
 
         if section_text:
-            chunks = splitter.split_text(section_text)
-            for chunk in chunks:
+            if count_tokens(section_text) < 500:  # characters, or later token count
                 all_chunks.append(
                     Document(
-                        page_content=chunk,
-                        metadata={"source": file_path, "title": title}
+                        page_content=section_text,
+                        metadata={"source": file_path, "main_title": main_title, "section_title": title}
                     )
                 )
+            else:
+                chunks = splitter.split_text(section_text)
+                for chunk in chunks:
+                    all_chunks.append(
+                        Document(
+                            page_content=chunk,
+                            metadata={"source": file_path, "main_title": main_title, "section_title": title}
+                        )
+                    )
+
         
         # all_chunks.append(
         #     Document(
