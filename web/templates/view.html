@@ -12,8 +12,9 @@
     <!-- Middle Column: PDF -->
     <div class="col-md-5 d-flex flex-column" style="height: 100vh; overflow-y: auto; padding: 20px;">
         <h4>PDF Viewer</h4>
-        <iframe src="{{ url_for('uploaded_file', filename=filename) }}" width="100%" height="100%"
+        <iframe src="{{ request.url_for('uploads', path=filename) }}" width="100%" height="100%"
             style="border: none;"></iframe>
+
     </div>
 
     <!-- Right Column: Summary -->

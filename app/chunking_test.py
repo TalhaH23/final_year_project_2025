@@ -2,6 +2,9 @@ import os
 from dotenv import load_dotenv
 from concurrent.futures import ThreadPoolExecutor
 import pymupdf
+import asyncio
+import aiofiles
+import time
 from typing import List
 from collections import defaultdict
 from langchain_core.documents import Document
@@ -11,7 +14,7 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
 from langchain_core.runnables import RunnableLambda
 from app.vector_stores.pinecone import vector_store 
-from app.title_extraction import section_headers, chunk_document_by_titles
+from app.title_extraction import chunk_document_by_titles
 
 load_dotenv()
 
@@ -40,7 +43,6 @@ Chunk:
 )
 
 chunk_summary_chain = chunk_summary_prompt | light_llm
-
 
 section_summary_prompt = PromptTemplate(
     input_variables=["section_title", "summaries"],
@@ -120,72 +122,97 @@ def group_doc_by_section(docs: List[Document]):
         section_map[doc.metadata.get("section_title", "Unknown Section")].append(doc)
     return section_map.values()
 
-def llm_summary(sections: List[Document]):
+async def llm_summary(sections: List[Document]):
     section_summaries = []
 
     for section_docs in group_doc_by_section(sections):
         section_title = section_docs[0].metadata["section_title"]
 
-        chunk_summaries = [
-            chunk_summary_chain.invoke({"text": doc.page_content}).content
+        # Use asyncio.gather to run multiple chunk summaries concurrently
+        chunk_tasks = [
+            chunk_summary_chain.ainvoke({"text": doc.page_content})
             for doc in section_docs
         ]
+        chunk_summaries = await asyncio.gather(*chunk_tasks)
+        merged_chunk_text = "\n".join([r.content for r in chunk_summaries])
 
-        merged_chunk_text = "\n".join(chunk_summaries)
-        section_summary = section_summary_chain.invoke({
+        section_summary = await section_summary_chain.ainvoke({
             "section_title": section_title,
             "summaries": merged_chunk_text
-        }).content
+        })
 
-        section_summaries.append(section_summary)
+        section_summaries.append(section_summary.content)
 
-    final_document_html = document_reduce_chain.invoke({
+    final_document_html = await document_reduce_chain.ainvoke({
         "text": "\n\n".join(section_summaries),
         "main_title": sections[0].metadata.get("main_title", "Untitled Document")
-    }).content
+    })
 
-    return final_document_html
+    return final_document_html.content
 
 
-def process_single_pdf(file_path):
+
+async def process_single_pdf(file_path):
     base_name = os.path.splitext(os.path.basename(file_path))[0]
-    print(f"\n--- Processing: {os.path.basename(file_path)} ---")
+    start_time = time.perf_counter()
+    print(f"\n--- Processing: {base_name} ---")
 
     try:
-        titles = section_headers(file_path)
-        # print(f"Found {len(titles)} section headers")
-        print(f"Extracted Titles for {base_name}")
+        # titles = section_headers(file_path)
+        # print(f"Extracted Titles for {base_name}")
+        # extract_title_time = time.perf_counter()
+        # print(f"Time taken to extract titles: {extract_title_time - start_time:.2f} seconds")
 
-        chunked_docs = chunk_document_by_titles(file_path, titles, chunk_size=500, chunk_overlap=50)
-        # print(f"Chunked into {len(chunked_docs)} titled sections")
+        chunked_docs = chunk_document_by_titles(file_path, chunk_size=500, chunk_overlap=50)
         print(f"Chunked Documents for {base_name}")
         
-        chunk_output_path = os.path.join("app/summaries", f"{base_name}_chunks.txt")
+        chunking_time = time.perf_counter()
+        print(f"Time taken to chunk: {chunking_time - start_time:.2f} seconds")
+
         os.makedirs("summaries", exist_ok=True)
+        chunk_output_path = os.path.join("app/summaries", f"{base_name}_chunks.txt")
 
-        with open(chunk_output_path, "w", encoding="utf-8") as f:
+        async with aiofiles.open(chunk_output_path, "w", encoding="utf-8") as f:
             for i, doc in enumerate(chunked_docs, 1):
-                f.write(f"\n\n Chunk {i}: {doc.metadata.get('section_title', 'Untitled')}\n")
-                f.write("-" * 40 + "\n")
-                f.write(doc.page_content.strip())
-                f.write("\n" + "=" * 60)
+                await f.write(f"\n\n Chunk {i}: {doc.metadata.get('section_title', 'Untitled')}\n")
+                await f.write("-" * 40 + "\n")
+                await f.write(doc.page_content.strip())
+                await f.write("\n" + "=" * 60)
 
-        # vector_store.add_documents(chunked_docs)
+        # await vector_store.aadd_documents(chunked_docs)
 
-        summary = llm_summary(chunked_docs)
-        # print(f"\nFinal Summary for {os.path.basename(file_path)}:\n{summary}\n")
+        summary = await llm_summary(chunked_docs)
+
         print(f"Generated Summary for {base_name}")
-
+        
+        summary_time = time.perf_counter()
+        print(f"Time taken to summarise: {summary_time - chunking_time:.2f} seconds")
+        print(f"Total Time for {base_name}: {summary_time - start_time:.2f} seconds")
         summary_output_path = os.path.join("app/summaries", f"{base_name}_summary.txt")
-        with open(summary_output_path, "w", encoding="utf-8") as f:
-            f.write(summary)
+
+        async with aiofiles.open(summary_output_path, "w", encoding="utf-8") as f:
+            await f.write(summary)
+
         return summary
 
     except Exception as e:
         print(f"Error while processing {file_path}: {str(e)}")
 
-# Parallel processing
-# with ThreadPoolExecutor(max_workers=4) as executor:
-#     executor.map(process_single_pdf, pdf_files)
 
-# process_single_pdf(pdf_files[1])
+async def process_pdfs(filepaths):
+    tasks = [process_single_pdf(fp) for fp in filepaths]
+    await asyncio.gather(*tasks)
+    
+async def generate_summary(file_path, summary_folder):
+    summary_text = await process_single_pdf(file_path)
+
+    pdf_filename = os.path.basename(file_path)
+    summary_filename = pdf_filename.replace('.pdf', '.txt')
+    summary_path = os.path.join(summary_folder, summary_filename)
+
+    async with aiofiles.open(summary_path, 'w', encoding='utf-8') as f:
+        await f.write(summary_text)
+
+    return summary_path
+
+ 

@@ -9,14 +9,14 @@ from collections import Counter
 from unstructured.partition.pdf import partition_pdf
 from unstructured.documents.elements import Title
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from unstructured.documents.elements import Title, NarrativeText, ListItem, Text
+from unstructured.documents.elements import Title, NarrativeText, ListItem, Text, Element
 from tiktoken import encoding_for_model
 
 enc = encoding_for_model("gpt-4")
 def count_tokens(text: str) -> int:
     return len(enc.encode(text))
 
-def extract_mupdf_titles(file_path):
+def extract_mupdf_titles(file_path: str) -> set:
     doc = fitz.open(file_path)
     font_sizes = []
 
@@ -59,26 +59,28 @@ def extract_mupdf_titles(file_path):
     return headers
 
 
-def extract_unstructured_titles(file_path):
-    elements = partition_pdf(filename=file_path, strategy="hi_res")
-    titles = []
-    for el in elements:
-        if isinstance(el, Title):
-            titles.append(el.text.strip())
-    return titles 
+def get_partitioned_elements(file_path: str) -> list[Element]:
+    return partition_pdf(filename=file_path, strategy="hi_res")
 
+def extract_titles_from_elements(elements: list[Element]) -> list[str]:
+    return [el.text.strip() for el in elements if isinstance(el, Title)]
 
-def section_headers(file_path):
-    mupdf_titles = extract_mupdf_titles(file_path)
-    unstructured_titles = extract_unstructured_titles(file_path)
+def get_intersecting_titles(file_path: str, elements: list[Element]) -> list[str]:
+    fitz_titles = extract_mupdf_titles(file_path)
+    unstructured_titles = extract_titles_from_elements(elements)
+    return [title for title in unstructured_titles if title in fitz_titles]
 
-    intersecting_titles = [title for title in unstructured_titles if title in mupdf_titles]
+def clean_text(text: str) -> str:
+    match = re.search(r"(Bibliography|References|Acknowledgements|Funding|Abbreviations)", text, re.IGNORECASE)
+    return text[:match.start()] if match else text
 
-    # print("Titles detected by BOTH methods (in document order):\n")
-    # for title in intersecting_titles:
-    #     print(f"{title}")
-        
-    return intersecting_titles
+def extract_cleaned_text(elements: list[Element]) -> str:
+    raw_text = "\n".join(
+        el.text.strip()
+        for el in elements
+        if el.text and isinstance(el, (Title, NarrativeText, ListItem, Text))
+    )
+    return clean_text(raw_text.strip())
 
 
 def get_title_positions_by_lines(full_text: str, titles: List[str]) -> List[tuple]:
@@ -98,11 +100,15 @@ def get_title_positions_by_lines(full_text: str, titles: List[str]) -> List[tupl
 
     return positions
 
-def clean_text(text: str) -> str:
-    match = re.search(r"(Bibliography|References|Acknowledgements|Funding)", text, re.IGNORECASE)
-    return text[:match.start()] if match else text
+def extract_main_title(file_path: str) -> str:
+    doc = pymupdf.open(file_path)
+    main_title = doc.metadata.get("title", "Untitled Document")
+    doc.close()
+    return main_title
 
-def chunk_document_by_titles(file_path, titles: List[str], chunk_size: int, chunk_overlap: int) -> List[Document]:
+
+def chunk_document_by_titles(file_path, chunk_size: int, chunk_overlap: int) -> List[Document]:
+    MIN_TOKEN_THRESHOLD = 500
 
     # doc = fitz.open(file_path)
     # full_text = ""
@@ -116,31 +122,20 @@ def chunk_document_by_titles(file_path, titles: List[str], chunk_size: int, chun
     #         if page_text:
     #             full_text += page_text + "\n"
     
-    elements = partition_pdf(filename=file_path, strategy="hi_res")
-    
-    doc = pymupdf.open(file_path)
-    main_title = doc.metadata["title"]
-    print(f"Main Title: {main_title}")
-    doc.close()
+    elements = get_partitioned_elements(file_path)
+    titles = get_intersecting_titles(file_path, elements)
+    full_text = extract_cleaned_text(elements)
 
-    full_text = "\n".join(
-        el.text.strip()
-        for el in elements
-        if el.text and isinstance(el, (Title, NarrativeText, ListItem, Text))
-    )
-
-    full_text = full_text.strip()
-    full_text = clean_text(full_text)
-    # print(full_text[:5000])
-    
     title_positions = get_title_positions_by_lines(full_text, titles)
     title_positions.sort(key=lambda x: x[1])
+    
+    main_title = extract_main_title(file_path)
 
     splitter = RecursiveCharacterTextSplitter.from_tiktoken_encoder(model_name="gpt-4", chunk_size=chunk_size, chunk_overlap=chunk_overlap)
     all_chunks = []
 
     for i, (title, start_idx) in enumerate(title_positions):
-        context = full_text[start_idx:start_idx+100] 
+        # context = full_text[start_idx:start_idx+100]
         # print(f"\n Title: {title}")
         # print(f"Position: {start_idx}")
         # print(f"Context snippet: {context}")
@@ -148,7 +143,7 @@ def chunk_document_by_titles(file_path, titles: List[str], chunk_size: int, chun
         section_text = full_text[start_idx:end_idx].strip()
 
         if section_text:
-            if count_tokens(section_text) < 500:  # characters, or later token count
+            if count_tokens(section_text) < MIN_TOKEN_THRESHOLD:  # characters, or later token count
                 all_chunks.append(
                     Document(
                         page_content=section_text,

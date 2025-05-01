@@ -1,13 +1,19 @@
 import os
 from concurrent.futures import ThreadPoolExecutor
+import asyncio
 from flask import Flask, render_template, request, redirect, url_for, send_from_directory
 from werkzeug.utils import secure_filename
-from app.chunking_test import process_single_pdf
+from app.chunking_test import process_single_pdf, process_pdfs
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 SUMMARY_FOLDER = os.path.join(os.getcwd(), 'summaries')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(SUMMARY_FOLDER, exist_ok=True)
+
+executor = ThreadPoolExecutor(max_workers=4)
+
+def process_pdf_in_background(filepaths):
+    return executor.submit(lambda: asyncio.run(process_pdfs(filepaths)))
 
 def create_app():
     app = Flask(__name__)
@@ -35,6 +41,7 @@ def create_app():
 
             with ThreadPoolExecutor(max_workers=4) as executor:
                 executor.map(generate_summary, filepaths)
+            # process_pdf_in_background(filepaths)
 
             return redirect(url_for('home'))
 
