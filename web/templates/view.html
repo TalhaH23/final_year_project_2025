@@ -14,7 +14,7 @@
         <h4>PDF Viewer</h4>
         <iframe src="{{ request.url_for('uploads', path=filename) }}" width="100%" height="100%"
             style="border: none;"></iframe>
-
+        <!-- <p class="mt-2"><strong>Original File:</strong> {{ display_name or filename }}</p> -->
     </div>
 
     <!-- Right Column: Summary -->

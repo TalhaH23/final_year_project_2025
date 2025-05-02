@@ -7,11 +7,20 @@ pdf_files = [os.path.join(pdf_folder_path, f) for f in os.listdir(pdf_folder_pat
 
 # docs = PyMuPDFLoader(pdf_files[0]).load()
 
-elements = partition_pdf(filename=pdf_files[1], strategy="hi_res")
+elements = partition_pdf(filename=pdf_files[0], strategy="hi_res")
 
 for i, el in enumerate(elements):
+    if el.category == "Table":
+        print(f"Table {i}:")
+        print(el.text.strip())
+    if el.category == "ListItem":
+        print(f"ListItem {i}:")
+        print(el.text.strip())
+    if el.category == "Heading":
+        print(f"Heading {i}:")
+        print(el.text.strip())
     if el.category == "Title":
-        print(f"\n--- Element #{i + 1} ---")
-        print(f"Title: {el.text.strip()}")
+        print(f"Title {i}:")
+        print(el.text.strip())
     # print(f"Category: {el.category}")
     # print(f"Text: {el.text.strip()[:300]}")

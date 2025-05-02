@@ -8,9 +8,9 @@
 {% if pdfs %}
 <ul class="list-group">
   {% for pdf in pdfs %}
-    <li class="list-group-item">
-      <a href="{{ url_for('view_pdf', filename=pdf) }}">{{ pdf }}</a>
-    </li>
+  <li class="list-group-item">
+    <a href="{{ request.url_for('view_pdf', pdf_id=pdf.id) }}">{{ pdf.name }}</a>
+  </li>
   {% endfor %}
 </ul>
 {% else %}
