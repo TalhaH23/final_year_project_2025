@@ -14,16 +14,17 @@ from app.chunking_test import generate_summary
 from app.celery.tasks.embeddings import process_embeddings
 from app.title_extraction import chunk_document_by_titles
 from app.celery.tasks import embeddings
+from web.routes.conversation_messages import router as conversation_router
 
 from web.db import get_db
 from web.db.models.pdf import Pdf
+from web.db.models.conversation import Conversation
 from sqlalchemy.orm import Session
 import uuid
 
-import redis
-r = redis.Redis(host='localhost', port=6379)
-print(r.ping())  # Should print True
-
+# import redis
+# r = redis.Redis(host='localhost', port=6379)
+# print(r.ping())  # Should print True
 
 
 # ---- Config ----
@@ -34,6 +35,7 @@ os.makedirs(SUMMARY_FOLDER, exist_ok=True)
 
 # ---- App Setup ----
 app = FastAPI()
+app.include_router(conversation_router)
 app.mount("/uploads", StaticFiles(directory=UPLOAD_FOLDER), name="uploads")
 app.mount("/static", StaticFiles(directory="web/static"), name="static")
 templates = Jinja2Templates(directory="web/templates") 
@@ -80,9 +82,13 @@ async def handle_upload(
             print(f"Chunked {pdf.filename} into {len(chunked_docs)} sections")
 
             serialized_docs = [
-                {"page_content": doc.page_content, "metadata": doc.metadata}
+                {
+                    "page_content": doc.page_content,
+                    "metadata": {**doc.metadata, "pdf_id": pdf_id}
+                }
                 for doc in chunked_docs
             ]
+            
             print(f"Creating embeddings for {pdf.filename}")
             try:
                 print(process_embeddings.app.conf.broker_url)
@@ -108,6 +114,20 @@ async def view_pdf(request: Request, pdf_id: str, db: Session = Depends(get_db))
     if not pdf:
         return {"error": "PDF not found"}
 
+    # Create or fetch conversation
+    conversation = (
+        db.query(Conversation)
+        .filter_by(pdf_id=pdf.id)
+        .order_by(Conversation.created_on.desc())
+        .first()
+    )
+    if not conversation:
+        conversation = Conversation(pdf_id=pdf.id)  # Or your logic
+        db.add(conversation)
+        db.commit()
+        db.refresh(conversation)
+
+    # Load summary
     if os.path.exists(summary_path):
         async with aiofiles.open(summary_path, "r", encoding="utf-8") as f:
             summary_text = await f.read()
@@ -116,9 +136,10 @@ async def view_pdf(request: Request, pdf_id: str, db: Session = Depends(get_db))
 
     return templates.TemplateResponse("view.html", {
         "request": request,
-        "filename": f"{pdf.id}.pdf",       # for iframe
+        "filename": f"{pdf.id}.pdf",
         "summary_text": summary_text,
-        "display_name": pdf.name           # optional: to show original name
+        "display_name": pdf.name,
+        "conversation_id": conversation.id,
     })
 
 @app.get("/download_summary/{filename}")

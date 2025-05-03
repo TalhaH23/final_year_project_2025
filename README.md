@@ -4,7 +4,7 @@ PDF Summariser
 
 ## Testing Script
 
-- Make sure your are using the virtual environment
+- Make sure you are using the virtual environment
 
 ### Test Website
 
@@ -18,7 +18,7 @@ PDF Summariser
 redis-server
 ```
 
-- Run Celery worker on another terminal
+- Run Celery on another terminal
 
 ```terminal
 inv devworker
@@ -26,24 +26,10 @@ inv devworker
 
 #### Start Web Server
 
-- On a separate terminal:
-
-- Remove old database if it exists
+- On a separate terminal run
 
 ```terminal
-rm test.db
-```
-
-- Initialise database
-
-```terminal
-python3 -m web.db.init_db
-```
-
-- Run Website
-
-```terminal
-inv dev
+./start_web.sh
 ```
 
 ### Test Summary

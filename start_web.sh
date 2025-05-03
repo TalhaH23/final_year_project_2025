@@ -15,6 +15,8 @@ mkdir -p uploads summaries
 echo "Initializing database..."
 python3 -m web.db.init_db
 
+export PYDANTIC_V2_FORCE_V1_BEHAVIOR=true
+
 # Step 5: Start development server
 echo "Starting development server..."
 inv dev
