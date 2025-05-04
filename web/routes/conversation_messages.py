@@ -40,3 +40,15 @@ async def create_message(conversation_id: str, request: Request, db: Session = D
     memory.save_context({"input": user_input}, {"answer": response["answer"]})
 
     return {"role": "assistant", "content": response["answer"]}
+
+@router.get("/{conversation_id}/messages")
+async def get_messages(conversation_id: str, db: Session = Depends(get_db)):
+    conversation = db.query(Conversation).filter_by(id=conversation_id).first()
+    if not conversation:
+        return JSONResponse({"error": "Conversation not found"}, status_code=404)
+
+    messages = [
+        {"role": m.role, "content": m.content}
+        for m in conversation.messages
+    ]
+    return messages

@@ -11,20 +11,6 @@ from langchain_core.retrievers import BaseRetriever
 from langchain_core.language_models import BaseChatModel
 from app.models import ChatArgs
 from sqlalchemy.orm import Session
-
-
-
-# def build_chat(chat_args: ChatArgs):
-
-#     retriever = build_retriever(chat_args)
-#     llm = build_llm(chat_args)
-#     memory = build_memory(chat_args)
-
-#     return ConversationalRetrievalChain.from_llm(
-#         llm=llm,
-#         retriever=retriever,
-#         memory=memory,
-#     )
     
 def build_chat(chat_args: ChatArgs, db: Session):
     llm: BaseChatModel = build_llm(chat_args)

@@ -21,3 +21,11 @@ h2 {
     padding: 20px;
     margin: 20px;
 } */
+
+#chat-box::-webkit-scrollbar {
+    width: 6px;
+}
+#chat-box::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+}
