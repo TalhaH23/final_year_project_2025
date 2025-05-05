@@ -16,7 +16,7 @@ def run_sync():
         executor.map(process_single_pdf, pdf_files)
 
 if __name__ == "__main__":
-    mode = sys.argv[1] if len(sys.argv) > 1 else "async"  # default is async
+    mode = sys.argv[1] if len(sys.argv) > 1 else "async" 
 
     if mode == "async":
         print("Running async processing...")

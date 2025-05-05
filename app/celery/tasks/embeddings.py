@@ -1,4 +1,3 @@
-# app/celery/tasks/embeddings.py
 from app.celery import celery_app
 from langchain_core.documents import Document
 

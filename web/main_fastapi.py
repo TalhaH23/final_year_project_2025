@@ -22,10 +22,6 @@ from web.db.models.conversation import Conversation
 from sqlalchemy.orm import Session
 import uuid
 
-# import redis
-# r = redis.Redis(host='localhost', port=6379)
-# print(r.ping())  # Should print True
-
 
 # ---- Config ----
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
@@ -114,7 +110,6 @@ async def view_pdf(request: Request, pdf_id: str, db: Session = Depends(get_db))
     if not pdf:
         return {"error": "PDF not found"}
 
-    # Create or fetch conversation
     conversation = (
         db.query(Conversation)
         .filter_by(pdf_id=pdf.id)
@@ -122,12 +117,11 @@ async def view_pdf(request: Request, pdf_id: str, db: Session = Depends(get_db))
         .first()
     )
     if not conversation:
-        conversation = Conversation(pdf_id=pdf.id)  # Or your logic
+        conversation = Conversation(pdf_id=pdf.id)
         db.add(conversation)
         db.commit()
         db.refresh(conversation)
 
-    # Load summary
     if os.path.exists(summary_path):
         async with aiofiles.open(summary_path, "r", encoding="utf-8") as f:
             summary_text = await f.read()

@@ -128,7 +128,6 @@ async def llm_summary(sections: List[Document]):
     for section_docs in group_doc_by_section(sections):
         section_title = section_docs[0].metadata["section_title"]
 
-        # Use asyncio.gather to run multiple chunk summaries concurrently
         chunk_tasks = [
             chunk_summary_chain.ainvoke({"text": doc.page_content})
             for doc in section_docs
@@ -162,7 +161,6 @@ async def process_single_pdf(file_path: str, docs: List[Document]) -> str:
         duration = time.perf_counter() - start_time
         print(f"✅ {base_name} summary done in {duration:.2f}s")
 
-        # Save summary
         summary_path = os.path.join("summaries", f"{base_name}_summary.txt")
         async with aiofiles.open(summary_path, "w", encoding="utf-8") as f:
             await f.write(summary)

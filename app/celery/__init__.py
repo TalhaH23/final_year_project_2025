@@ -1,4 +1,3 @@
-# app/celery/__init__.py
 from celery import Celery
 import os
 from dotenv import load_dotenv

@@ -14,7 +14,6 @@ async def create_message(conversation_id: str, request: Request, db: Session = D
     data = await request.json()
     user_input = data.get("input")
 
-    # Fetch Conversation & Pdf
     conversation = db.query(Conversation).filter_by(id=conversation_id).first()
     if not conversation:
         return JSONResponse({"error": "Conversation not found"}, status_code=404)

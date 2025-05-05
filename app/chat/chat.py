@@ -17,7 +17,6 @@ def build_chat(chat_args: ChatArgs, db: Session):
     retriever: BaseRetriever = build_retriever(chat_args)
     memory: ConversationBufferMemory = build_memory(chat_args, db)
 
-    # Rewrite follow-ups
     contextualize_q_prompt = ChatPromptTemplate.from_messages([
         ("system", "Rewrite follow-up questions to be standalone. Only rewrite if needed."),
         MessagesPlaceholder("chat_history"),
@@ -27,7 +26,6 @@ def build_chat(chat_args: ChatArgs, db: Session):
         llm=llm, retriever=retriever, prompt=contextualize_q_prompt
     )
 
-    # Answering step
     qa_prompt = ChatPromptTemplate.from_messages([
         ("system", "Answer based only on the following context. Don't make things up.\n\n{context}"),
         MessagesPlaceholder("chat_history"),

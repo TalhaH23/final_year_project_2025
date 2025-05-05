@@ -24,7 +24,6 @@ class SQLMessageHistory(BaseChatMessageHistory):
         )
         
     def clear(self):
-        # Clear the messages in the database
         pass
     
 def build_memory(chat_args, db: Session):
