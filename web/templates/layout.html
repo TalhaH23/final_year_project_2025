@@ -111,54 +111,55 @@
       const progressBar = document.getElementById("progressBar");
       const progressStatus = document.getElementById("progressStatus");
 
-      form.addEventListener("submit", async function (e) {
+      form.addEventListener("submit", function (e) {
         e.preventDefault();
 
         button.disabled = true;
         button.textContent = "Creating...";
 
         const formData = new FormData(form);
-        bootstrap.Modal.getInstance(document.getElementById("projectModal")).hide(); // Hide first modal
-        progressModal.show(); // Show progress modal
-        progressStatus.textContent = "Uploading and processing...";
-        progressBar.style.width = "10%";
-        progressBar.textContent = "10%";
 
-        try {
-          const response = await fetch("/projects/new", {
-            method: "POST",
-            body: formData,
-          });
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/projects/new", true);
 
-          if (response.redirected) {
-            // Simulate processing progress
-            let width = 10;
-            const interval = setInterval(() => {
-              if (width >= 100) {
-                clearInterval(interval);
-                window.location.href = response.url; // Navigate when done
-              } else {
-                width += 10;
-                progressBar.style.width = width + "%";
-                progressBar.textContent = width + "%";
-                progressStatus.textContent = `Processing... (${width}%)`;
-              }
-            }, 300); // Update every 300ms
-          } else {
-            alert("Failed to create project.");
-            progressModal.hide();
+        xhr.upload.addEventListener("progress", (e) => {
+          if (e.lengthComputable) {
+            const percent = Math.round((e.loaded / e.total) * 100);
+            progressBar.style.width = percent + "%";
+            progressBar.textContent = percent + "%";
+            progressStatus.textContent = `Uploading... (${percent}%)`;
           }
-        } catch (err) {
-          console.error("Error creating project:", err);
-          alert("Something went wrong.");
-          progressModal.hide();
-        } finally {
-          button.disabled = false;
-          button.textContent = "Create";
-        }
+        });
+
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status >= 200 && xhr.status < 300) {
+              progressBar.style.width = "100%";
+              progressBar.textContent = "100%";
+              progressStatus.textContent = "Processing complete. Redirecting...";
+              setTimeout(() => {
+                window.location.href = xhr.responseURL || "/";
+              }, 1000);
+            } else {
+              alert("Upload failed. Please try again.");
+              progressModal.hide();
+            }
+            button.disabled = false;
+            button.textContent = "Create";
+          }
+        };
+
+        bootstrap.Modal.getInstance(document.getElementById("projectModal")).hide();
+        progressModal.show();
+        progressStatus.textContent = "Initializing upload...";
+        progressBar.style.width = "0%";
+        progressBar.textContent = "0%";
+
+        xhr.send(formData);
       });
     });
   </script>
+
 
   {% endblock %}
 </body>

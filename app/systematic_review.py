@@ -13,7 +13,7 @@ from langchain_core.documents import Document
 from app.title_extraction import chunk_document_by_titles
 from collections import defaultdict
 from app.vector_stores.pinecone import vector_store
-from app.stard_test import llm_summary, group_doc_by_section
+from app.stard_summary import llm_summary, group_doc_by_section
 from app.criteria.criteria import parse_llm_screening_output
 from app.llms.chatopenai import light_llm, strong_llm
 

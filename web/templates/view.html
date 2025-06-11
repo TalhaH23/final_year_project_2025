@@ -47,27 +47,40 @@
             {{ summary_text | safe }}
         </div>
 
-        <div id="screening-section" class="d-none">
+        <div id="screening-section" class="mt-4">
             {% if screening_result %}
-            <h5>Review Screening Output</h5>
+            {% set decision = screening_result.decision or "Unclear" %}
+            {% set alert_class = {
+            "Include": "alert-success",
+            "Included": "alert-success",
+            "Exclude": "alert-danger",
+            "Excluded": "alert-danger",
+            "Unclear": "alert-warning"
+            }.get(decision, "alert-secondary") %}
 
-            {% set unmatched = screening_result.criteria_matches.values() | select('equalto', 'N/A') | list %}
-            {% if unmatched %}
-            <div class="alert alert-warning small mt-2">
-                ⚠️ This document was included without full criteria match. Please review manually.
+            <div class="alert {{ alert_class }}">
+                <h5 class="alert-heading">Review Screening Output</h5>
+
+                {% set unmatched = screening_result.criteria_matches.values() | select('equalto', 'N/A') | list %}
+                {% if unmatched %}
+                <div class="alert alert-warning small mt-2">
+                    ⚠️ This document was included without full criteria match. Please review manually.
+                </div>
+                {% endif %}
+
+                <ul class="list-group mt-2">
+                    <li class="list-group-item"><strong>Decision:</strong> {{ screening_result.decision or "N/A" }}</li>
+                    <li class="list-group-item"><strong>Confidence:</strong> {{ screening_result.confidence or "N/A" }}
+                    </li>
+
+                    {% for crit, value in screening_result.criteria_matches.items() %}
+                    <li class="list-group-item"><strong>{{ crit }}:</strong> {{ value or "N/A" }}</li>
+                    {% endfor %}
+
+                    <li class="list-group-item"><strong>Rationale:</strong> {{ screening_result.rationale or "N/A" }}
+                    </li>
+                </ul>
             </div>
-            {% endif %}
-
-            <ul class="list-group">
-                <li class="list-group-item"><strong>Decision:</strong> {{ screening_result.decision or "N/A" }}</li>
-                <li class="list-group-item"><strong>Confidence:</strong> {{ screening_result.confidence or "N/A" }}</li>
-
-                {% for crit, value in screening_result.criteria_matches.items() %}
-                <li class="list-group-item"><strong>{{ crit }}:</strong> {{ value or "N/A" }}</li>
-                {% endfor %}
-
-                <li class="list-group-item"><strong>Rationale:</strong> {{ screening_result.rationale or "N/A" }}</li>
-            </ul>
             {% else %}
             <div class="text-muted">Screening result not available.</div>
             {% endif %}

@@ -34,64 +34,163 @@
     </div>
 </div>
 
+<!-- Upload Progress Modal -->
+<div class="modal fade" id="uploadProgressModal" tabindex="-1" aria-labelledby="uploadProgressLabel" aria-hidden="true"
+    data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center p-4">
+            <h5 id="uploadProgressLabel" class="mb-3">Uploading PDFs...</h5>
+            <div class="progress">
+                <div id="uploadProgressBar" class="progress-bar progress-bar-striped progress-bar-animated"
+                    role="progressbar" style="width: 0%">0%</div>
+            </div>
+            <p class="mt-3" id="uploadProgressStatus">Initializing upload...</p>
+        </div>
+    </div>
+</div>
+
 <hr>
 
 <!-- List of PDFs -->
 {% if pdfs %}
-<ul class="list-group">
-    {% for pdf in pdfs %}
-    <li class="list-group-item">
-        <a href="{{ url_for('view_pdf', pdf_id=pdf.id) }}">{{ pdf.name }}</a>
-    </li>
-    {% endfor %}
-</ul>
+<form id="evidence-form" method="POST" action="{{ url_for('generate_evidence_table', project_id=project.id) }}">
+    <ul class="list-group">
+        {% for pdf in pdfs %}
+        {% set decision = screening_decisions.get(pdf.id, "Exclude") %}
+        {% set list_class = {
+        "Include": "list-group-item-success",
+        "Included": "list-group-item-success",
+        "Exclude": "list-group-item-danger",
+        "Excluded": "list-group-item-danger",
+        "Unclear": "list-group-item-warning"
+        }.get(decision, "list-group-item-light") %}
+
+        <li class="list-group-item d-flex justify-content-between align-items-center {{ list_class }}">
+            <div>
+                <input class="form-check-input me-2 pdf-checkbox" type="checkbox" name="pdf_ids" value="{{ pdf.id }}">
+                <a href="{{ url_for('view_pdf', pdf_id=pdf.id) }}">{{ pdf.name }}</a>
+                <small class="ms-2 text-muted">({{ decision }})</small>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <button id="create-evidence-btn" class="btn btn-secondary mt-3" type="submit" disabled>
+        Generate Evidence Table
+    </button>
+</form>
 {% else %}
 <p>No PDFs uploaded yet.</p>
 {% endif %}
 
-<!-- Evidence Table Modal Trigger -->
-{% if evidence_table and evidence_table|length > 0 %}
-<hr>
-<button class="btn btn-secondary mt-4" data-bs-toggle="modal" data-bs-target="#evidenceModal">
-    View Evidence Table
+<!-- Cached evidence button -->
+<button id="open-evidence-btn" class="btn btn-secondary mt-4">
+    Open Evidence Table
 </button>
 
-<!-- Evidence Table Modal -->
-<div class="modal fade" id="evidenceModal" tabindex="-1" aria-labelledby="evidenceModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="evidenceModalLabel">Evidence Table</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered table-hover table-sm">
-                        <thead class="table-light">
-                            <tr>
-                                {% for key in evidence_table[0].keys() %}
-                                <th>{{ key }}</th>
-                                {% endfor %}
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for row in evidence_table %}
-                            <tr>
-                                {% for value in row.values() %}
-                                <td style="white-space: pre-wrap; text-align: left; vertical-align: top;">{{ value }}</td>
-                                {% endfor %}
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
+{% endblock %}
 
+{% block scripts %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const checkboxes = document.querySelectorAll('.pdf-checkbox');
+        const createBtn = document.getElementById('create-evidence-btn');
+        const form = document.getElementById('evidence-form');
+        const openEvidenceBtn = document.getElementById('open-evidence-btn');
+
+        // Enable generate button only if at least one checkbox is checked
+        checkboxes.forEach(cb => {
+            cb.addEventListener('change', () => {
+                const anyChecked = [...checkboxes].some(c => c.checked);
+                createBtn.disabled = !anyChecked;
+            });
+        });
+
+        // AJAX form submit for evidence generation
+        form?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: formData
+            });
+            const html = await response.text();
+            injectAndShowModal(html);
+        });
+
+        // Load cached modal
+        openEvidenceBtn?.addEventListener('click', async () => {
+            const response = await fetch(`/projects/{{ project.id }}/evidence_cached`);
+            if (response.ok) {
+                const html = await response.text();
+                injectAndShowModal(html);
+            } else {
+                alert("No cached evidence table found.");
+            }
+        });
+
+        function injectAndShowModal(html) {
+            const modalContainer = document.createElement('div');
+            modalContainer.innerHTML = html;
+            document.body.appendChild(modalContainer);
+            const modalEl = modalContainer.querySelector('#evidenceModal');
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+            modalEl.addEventListener('hidden.bs.modal', () => {
+                modalContainer.remove();
+            });
+        }
+
+        // Upload progress logic
+        const uploadForm = document.getElementById("upload-form");
+        const uploadModal = bootstrap.Modal.getOrCreateInstance(document.getElementById("uploadModal"));
+        const progressModal = new bootstrap.Modal(document.getElementById("uploadProgressModal"));
+        const progressBar = document.getElementById("uploadProgressBar");
+        const progressStatus = document.getElementById("uploadProgressStatus");
+
+        uploadForm?.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            const formData = new FormData(uploadForm);
+            uploadModal.hide();
+            progressModal.show();
+            progressBar.style.width = "0%";
+            progressBar.textContent = "0%";
+            progressStatus.textContent = "Starting upload...";
+
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST", uploadForm.action);
+
+            xhr.upload.onprogress = function (event) {
+                if (event.lengthComputable) {
+                    const percent = Math.round((event.loaded / event.total) * 100);
+                    progressBar.style.width = percent + "%";
+                    progressBar.textContent = percent + "%";
+                    progressStatus.textContent = `Uploading... (${percent}%)`;
+                }
+            };
+
+            xhr.onload = function () {
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    progressBar.style.width = "100%";
+                    progressBar.textContent = "100%";
+                    progressStatus.textContent = "Upload complete. Redirecting...";
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                } else {
+                    alert("Upload failed.");
+                    progressModal.hide();
+                }
+            };
+
+            xhr.onerror = function () {
+                alert("Error uploading files.");
+                progressModal.hide();
+            };
+
+            xhr.send(formData);
+        });
+    });
+</script>
 {% endblock %}

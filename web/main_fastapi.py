@@ -6,17 +6,16 @@ import json
 import logging
 from typing import List, Dict
 from langchain_core.documents import Document
-
+# What is the effectiveness of cognitive behavioral therapy (CBT) for treating depression in adolescents?
 
 from fastapi import FastAPI, UploadFile, File, Request, Depends, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import FileResponse, RedirectResponse
+from fastapi.responses import FileResponse, RedirectResponse, JSONResponse
 from fastapi.concurrency import run_in_threadpool
 
 # from app.chunking_test import generate_summary
-from app.stard_test import generate_summary
 from app.vector_stores.pinecone import process_embeddings
 from app.title_extraction import chunk_document_by_titles, chunk_docs
 from app.celery.tasks import embeddings
@@ -150,13 +149,6 @@ async def home(request: Request, db: Session = Depends(get_db)):
     projects = db.query(Project).all()
     return templates.TemplateResponse("home.html", {"request": request, "projects": projects})
 
-# @app.get("/projects/{project_id}/upload", response_class=HTMLResponse, name="upload_page")
-# async def upload_page(request: Request, project_id: str, db: Session = Depends(get_db)):
-#     project = db.query(Project).filter_by(id=project_id).first()
-#     if not project:
-#         return {"error": "Project not found"}
-#     return templates.TemplateResponse("upload.html", {"request": request, "project": project})
-
 @app.post("/projects/{project_id}/upload", response_class=HTMLResponse)
 async def handle_upload(
     request: Request,
@@ -193,8 +185,8 @@ async def handle_upload(
     ]
     await asyncio.gather(*tasks)
 
-    # Rebuild evidence table (optional: only for new_filtered)
-    await create_evidence_table(filtered_pdfs, criteria, k=5)
+    # # Rebuild evidence table (optional: only for new_filtered)
+    # await create_evidence_table(filtered_pdfs, criteria, k=5)
 
     return RedirectResponse(f"/projects/{project_id}", status_code=303)
 
@@ -207,17 +199,71 @@ async def view_project(request: Request, project_id: str, db: Session = Depends(
 
     pdfs = db.query(Pdf).filter_by(project_id=project_id).all()
     filtered_ids = json.loads(project.filtered_pdf_ids or "[]")
-
     filtered_pdfs = {pdf.id: pdf for pdf in pdfs if pdf.id in filtered_ids}
-    evidence_table = await create_evidence_table(filtered_pdfs, criteria_dict.get(project.search_criteria, []), k=5)
-
-    # print("Evidence table:", evidence_table)
+    
+    # Load screening results from disk
+    screening_decisions = {}
+    for pdf_id in filtered_ids:
+        review_path = os.path.join("review_results", f"{pdf_id}_screening_result.json")
+        if os.path.exists(review_path):
+            with open(review_path, "r", encoding="utf-8") as f:
+                try:
+                    result = json.load(f)
+                    screening_decisions[pdf_id] = result.get("decision", "Unclear")
+                except Exception:
+                    screening_decisions[pdf_id] = "Unclear"
 
     return templates.TemplateResponse("project_detail.html", {
         "request": request,
         "project": project,
         "pdfs": pdfs,
-        "evidence_table": evidence_table,
+        "screening_decisions": screening_decisions,
+        "evidence_table": [],
+    })
+    
+@app.post("/projects/{project_id}/evidence", response_class=HTMLResponse)
+async def generate_evidence_table(
+    request: Request,
+    project_id: str,
+    pdf_ids: List[str] = Form(...),
+    db: Session = Depends(get_db)
+):
+    pdfs = db.query(Pdf).filter(Pdf.id.in_(pdf_ids)).all()
+    pdf_dict = {pdf.id: pdf for pdf in pdfs}
+
+    project = db.query(Project).filter_by(id=project_id).first()
+    criteria = criteria_dict.get(project.search_criteria, [])
+
+    table = await create_evidence_table(pdf_dict, criteria, k=5)
+
+    # ✅ Save table to disk so it can be retrieved later
+    cached_path = os.path.join("review_results", f"{project_id}_evidence_table.json")
+    with open(cached_path, "w", encoding="utf-8") as f:
+        json.dump(table, f, indent=2)
+
+    return templates.TemplateResponse("evidence_modal.html", {
+        "request": request,
+        "evidence_table": table
+    })
+
+@app.get("/projects/{project_id}/evidence_cached", response_class=HTMLResponse)
+async def get_cached_evidence_table(
+    request: Request,
+    project_id: str,
+    db: Session = Depends(get_db)
+):
+    # Define path where evidence_table is stored
+    path = os.path.join("review_results", f"{project_id}_evidence_table.json")
+    
+    if not os.path.exists(path):
+        return HTMLResponse(content="Evidence table not found.", status_code=404)
+
+    with open(path, "r", encoding="utf-8") as f:
+        evidence_table = json.load(f)
+
+    return templates.TemplateResponse("evidence_modal.html", {
+        "request": request,
+        "evidence_table": evidence_table
     })
 
 @app.get("/view/{pdf_id}", response_class=HTMLResponse)
