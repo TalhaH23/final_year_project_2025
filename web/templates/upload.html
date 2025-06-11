@@ -6,6 +6,13 @@
 <div class="container mt-5">
   <h2>Upload PDFs</h2>
 
+  <!-- Show the review question if available -->
+  {% if project and project.review_question %}
+  <div class="alert alert-info">
+    <strong>Review Question:</strong> {{ project.review_question }}
+  </div>
+  {% endif %}
+
   <form id="upload-form" method="POST" enctype="multipart/form-data">
     <div class="mb-3">
       <input class="form-control" type="file" name="pdfs" id="pdfs" multiple>
@@ -21,6 +28,7 @@
     </div>
   </div>
 </div>
+
 
 <script>
   document.getElementById('upload-form').addEventListener('submit', function () {

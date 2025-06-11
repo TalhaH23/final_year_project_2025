@@ -39,9 +39,41 @@
     <div class="col border-start d-flex flex-column"
         style="height: 100vh; overflow-y: auto; padding: 20px; scroll-behavior: smooth;">
         <h4>Summary</h4>
-        <div class="summary-content">
+        <div class="btn-group mb-3" role="group">
+            <button class="btn btn-sm btn-outline-primary active" id="toggle-summary">Summary</button>
+            <button class="btn btn-sm btn-outline-secondary" id="toggle-screening">Review Result</button>
+        </div>
+        <div id="summary-section" class="summary-content">
             {{ summary_text | safe }}
         </div>
+
+        <div id="screening-section" class="d-none">
+            {% if screening_result %}
+            <h5>Review Screening Output</h5>
+
+            {% set unmatched = screening_result.criteria_matches.values() | select('equalto', 'N/A') | list %}
+            {% if unmatched %}
+            <div class="alert alert-warning small mt-2">
+                ⚠️ This document was included without full criteria match. Please review manually.
+            </div>
+            {% endif %}
+
+            <ul class="list-group">
+                <li class="list-group-item"><strong>Decision:</strong> {{ screening_result.decision or "N/A" }}</li>
+                <li class="list-group-item"><strong>Confidence:</strong> {{ screening_result.confidence or "N/A" }}</li>
+
+                {% for crit, value in screening_result.criteria_matches.items() %}
+                <li class="list-group-item"><strong>{{ crit }}:</strong> {{ value or "N/A" }}</li>
+                {% endfor %}
+
+                <li class="list-group-item"><strong>Rationale:</strong> {{ screening_result.rationale or "N/A" }}</li>
+            </ul>
+            {% else %}
+            <div class="text-muted">Screening result not available.</div>
+            {% endif %}
+        </div>
+
+
     </div>
 </div>
 {% endblock %}
@@ -130,5 +162,20 @@
         errorBox.textContent = "";
     }
     });
+
+    document.getElementById("toggle-summary").addEventListener("click", function () {
+        this.classList.add("active");
+        document.getElementById("toggle-screening").classList.remove("active");
+        document.getElementById("summary-section").classList.remove("d-none");
+        document.getElementById("screening-section").classList.add("d-none");
+    });
+
+    document.getElementById("toggle-screening").addEventListener("click", function () {
+        this.classList.add("active");
+        document.getElementById("toggle-summary").classList.remove("active");
+        document.getElementById("summary-section").classList.add("d-none");
+        document.getElementById("screening-section").classList.remove("d-none");
+    });
+
 </script>
 {% endblock %}

@@ -1,0 +1,97 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ project.name }} - Documents{% endblock %}
+
+{% block content %}
+<h2>{{ project.name }}</h2>
+<p><strong>Review Type:</strong> {{ project.review_type | capitalize }}</p>
+<p><strong>Review Question:</strong> {{ project.review_question }}</p>
+
+<!-- Upload Button -->
+<button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#uploadModal">
+    Upload PDFs
+</button>
+
+<!-- Upload Modal -->
+<div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="upload-form" method="POST" enctype="multipart/form-data"
+                action="{{ url_for('handle_upload', project_id=project.id) }}">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel">Upload PDFs</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control" type="file" name="pdfs" id="pdfs" multiple required>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button class="btn btn-primary" type="submit">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<!-- List of PDFs -->
+{% if pdfs %}
+<ul class="list-group">
+    {% for pdf in pdfs %}
+    <li class="list-group-item">
+        <a href="{{ url_for('view_pdf', pdf_id=pdf.id) }}">{{ pdf.name }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No PDFs uploaded yet.</p>
+{% endif %}
+
+<!-- Evidence Table Modal Trigger -->
+{% if evidence_table and evidence_table|length > 0 %}
+<hr>
+<button class="btn btn-secondary mt-4" data-bs-toggle="modal" data-bs-target="#evidenceModal">
+    View Evidence Table
+</button>
+
+<!-- Evidence Table Modal -->
+<div class="modal fade" id="evidenceModal" tabindex="-1" aria-labelledby="evidenceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="evidenceModalLabel">Evidence Table</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-sm">
+                        <thead class="table-light">
+                            <tr>
+                                {% for key in evidence_table[0].keys() %}
+                                <th>{{ key }}</th>
+                                {% endfor %}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for row in evidence_table %}
+                            <tr>
+                                {% for value in row.values() %}
+                                <td style="white-space: pre-wrap; text-align: left; vertical-align: top;">{{ value }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

@@ -2,9 +2,7 @@ import os
 import sys
 import asyncio
 from concurrent.futures import ThreadPoolExecutor
-# from app.chunking_test import process_pdfs
-from app.pdf_summary import process_single_pdf
-from app.stard_test import process_pdfs
+from app.systematic_review import process_pdfs
 
 
 pdf_folder_path = "app/PDFs"
@@ -15,7 +13,7 @@ def run_async():
 
 def run_sync():
     with ThreadPoolExecutor(max_workers=4) as executor:
-        executor.map(process_single_pdf, pdf_files)
+        executor.map(process_pdfs, pdf_files)
 
 if __name__ == "__main__":
     mode = sys.argv[1] if len(sys.argv) > 1 else "async" 

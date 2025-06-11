@@ -1,19 +1,23 @@
 {% extends "layout.html" %}
-
-{% block title %}Home{% endblock %}
+{% block title %}Systematic Review Projects{% endblock %}
 
 {% block content %}
-<h1>Uploaded PDFs</h1>
+<h1>Systematic Review Projects</h1>
 
-{% if pdfs %}
+<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#projectModal">
+  Create Project
+</button>
+
+{% if projects %}
 <ul class="list-group">
-  {% for pdf in pdfs %}
-  <li class="list-group-item">
-    <a href="{{ request.url_for('view_pdf', pdf_id=pdf.id) }}">{{ pdf.name }}</a>
+  {% for project in projects %}
+  <li class="list-group-item mt-2">
+    <a href="{{ url_for('view_project', project_id=project.id) }}">{{ project.name }}</a>
+    <small class="text-muted">{{ project.review_type | capitalize }} - {{ project.review_question }}</small>
   </li>
   {% endfor %}
 </ul>
 {% else %}
-<p>No PDFs uploaded yet.</p>
+<p>No projects created yet.</p>
 {% endif %}
 {% endblock %}

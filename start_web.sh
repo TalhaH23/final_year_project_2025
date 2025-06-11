@@ -1,4 +1,8 @@
 #!/bin/bash
+source venv/bin/activate
+
+echo "Resetting Pinecone index..."
+python3 -m app.vector_stores.reset_pinecone
 
 # Step 1: Remove old database
 echo "Removing old database..."
@@ -6,10 +10,10 @@ rm -f test.db
 
 # Step 2: Remove uploads and summaries
 echo "Cleaning up old uploads and summaries..."
-rm -rf uploads summaries
+rm -rf uploads summaries review_results
 
 # Step 3: Recreate directories
-mkdir -p uploads summaries
+mkdir -p uploads summaries review_results
 
 # Step 4: Initialize database
 echo "Initializing database..."
