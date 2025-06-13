@@ -1,26 +1,14 @@
 import os
-from dotenv import load_dotenv
-from concurrent.futures import ThreadPoolExecutor
-import pymupdf
-import asyncio
-import aiofiles
 import time
+from dotenv import load_dotenv
+import asyncio
 from typing import List
 from collections import defaultdict
 from langchain_core.documents import Document
-from langchain_openai import ChatOpenAI
-from langchain_community.document_loaders import PyMuPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.prompts import PromptTemplate
-from langchain_core.runnables import RunnableLambda
-from app.vector_stores.pinecone import vector_store 
-from app.title_extraction import chunk_document_by_titles, chunk_docs
 from app.llms.chatopenai import light_llm, strong_llm
 
 load_dotenv()
-
-# pdf_folder_path = "PDFs"
-# pdf_files = [os.path.join(pdf_folder_path, f) for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
 
 CHECKLIST_DIR = "app/checklists"
 STARD_CHECKLIST_PATH = os.path.join(CHECKLIST_DIR, "stard.md")
@@ -28,14 +16,12 @@ STARD_CHECKLIST_PATH = os.path.join(CHECKLIST_DIR, "stard.md")
 with open(STARD_CHECKLIST_PATH, "r", encoding="utf-8") as f:
     stard_checklist = f.read()
 
-
-
 chunk_summary_prompt = PromptTemplate(
     input_variables=["text"],
     template="""
-You are summarizing a part of a scientific diagnostic accuracy paper.
+You are summarising a part of a scientific diagnostic accuracy paper.
 
-Summarization Rules:
+Summarsation Rules:
 - Write 5 to 6 sentences maximum.
 - Ignore references, citations, and irrelevant metadata.
 - Output plain text, no formatting.
@@ -51,9 +37,9 @@ chunk_summary_chain = chunk_summary_prompt | light_llm
 section_summary_prompt = PromptTemplate(
     input_variables=["section_title", "summaries"],
     template="""
-You are summarizing a section of a diagnostic accuracy paper using pre-summarized chunks.
+You are summarising a section of a diagnostic accuracy paper using pre-summarised chunks.
 
-Summarization Rules:
+Summarisation Rules:
 - Write 3-6 bullet points.
 - Avoid deep methodology unless relevant to diagnostic evaluation.
 
@@ -77,7 +63,7 @@ You are writing a structured narrative summary of a diagnostic accuracy paper us
 
 Instructions:
 - Use the structure of the STARD checklist provided below.
-- Summarize each applicable section based on the content.
+- Summarise each applicable section based on the content.
 - Ignore checklist items not covered in the summaries.
 - Do not repeat the checklist verbatim.
 - Do not critique or evaluate — focus on reporting what is present.
@@ -96,12 +82,18 @@ Section Summaries:
 document_reduce_chain = document_reduce_prompt | strong_llm
 
 def group_doc_by_section(docs: List[Document]):
+    """Group documents by their section titles"""
+    
     section_map = defaultdict(list)
     for doc in docs:
         section_map[doc.metadata.get("section_title", "Unknown Section")].append(doc)
     return section_map.values()
 
 async def llm_summary(sections: List[Document]):
+    """Generate a structured summary of the provided sections using LLMs"""
+    
+    start_time = time.perf_counter()
+    print(f"Summarising {len(sections)} sections...")
     section_summaries = []
 
     for section_docs in group_doc_by_section(sections):
@@ -128,50 +120,52 @@ async def llm_summary(sections: List[Document]):
     })
     
     print(f"Document summarised")
+    end_time = time.perf_counter() - start_time
+    # print(f"Summary completed in {end_time:.2f} seconds.")
 
     return final_document_html.content
 
-async def process_single_pdf(file_path: str, docs: List[Document]) -> str:
-    base_name = os.path.splitext(os.path.basename(file_path))[0]
-    start_time = time.perf_counter()
+# async def process_single_pdf(file_path: str, docs: List[Document]) -> str:
+#     base_name = os.path.splitext(os.path.basename(file_path))[0]
+#     start_time = time.perf_counter()
 
-    try:
-        summary = await llm_summary(docs)
+#     try:
+#         summary = await llm_summary(docs)
 
-        duration = time.perf_counter() - start_time
-        print(f"{base_name} summary done in {duration:.2f}s")
+#         duration = time.perf_counter() - start_time
+#         print(f"{base_name} summary done in {duration:.2f}s")
 
-        summary_path = os.path.join("summaries", f"{base_name}_summary.txt")
-        async with aiofiles.open(summary_path, "w", encoding="utf-8") as f:
-            await f.write(summary)
+#         summary_path = os.path.join("summaries", f"{base_name}_summary.txt")
+#         async with aiofiles.open(summary_path, "w", encoding="utf-8") as f:
+#             await f.write(summary)
 
-        return summary
+#         return summary
 
-    except Exception as e:
-        print(f"Failed to process {base_name}: {e}")
-        return ""
+#     except Exception as e:
+#         print(f"Failed to process {base_name}: {e}")
+#         return ""
 
 
-async def process_pdfs(filepaths: List[str]):
-    tasks = []
+# async def process_pdfs(filepaths: List[str]):
+#     tasks = []
 
-    for file_path in filepaths:
-        docs = chunk_document_by_titles(file_path, chunk_size=500, chunk_overlap=50)
-        tasks.append(llm_summary(docs))
+#     for file_path in filepaths:
+#         docs = chunk_document_by_titles(file_path, chunk_size=500, chunk_overlap=50)
+#         tasks.append(llm_summary(docs))
 
-    summaries = await asyncio.gather(*tasks)
-    return summaries
+#     summaries = await asyncio.gather(*tasks)
+#     return summaries
     
-async def generate_summary(pdf_id, summary_folder, docs: List[Document]):
-    file_path = os.path.join("uploads", f"{pdf_id}.pdf")
-    summary_text = await llm_summary(docs)
+# async def generate_summary(pdf_id, summary_folder, docs: List[Document]):
+#     file_path = os.path.join("uploads", f"{pdf_id}.pdf")
+#     summary_text = await llm_summary(docs)
 
-    summary_filename = f"{pdf_id}.txt"
-    summary_path = os.path.join(summary_folder, summary_filename)
+#     summary_filename = f"{pdf_id}.txt"
+#     summary_path = os.path.join(summary_folder, summary_filename)
 
-    async with aiofiles.open(summary_path, 'w', encoding='utf-8') as f:
-        await f.write(summary_text or "No summary generated.")
+#     async with aiofiles.open(summary_path, 'w', encoding='utf-8') as f:
+#         await f.write(summary_text or "No summary generated.")
 
-    return summary_path
+#     return summary_path
 
  

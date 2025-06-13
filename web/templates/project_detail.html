@@ -4,8 +4,8 @@
 
 {% block content %}
 <h2>{{ project.name }}</h2>
-<p><strong>Review Type:</strong> {{ project.review_type | capitalize }}</p>
 <p><strong>Review Question:</strong> {{ project.review_question }}</p>
+<p><strong>Eligibility Criteria:</strong> {{ project.search_criteria | capitalize }}</p>
 
 <!-- Upload Button -->
 <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#uploadModal">

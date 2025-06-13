@@ -4,6 +4,8 @@ from langchain_community.vectorstores import Pinecone as LangchainPinecone
 from app.embeddings.openai import embeddings
 from dotenv import load_dotenv
 
+### Resets Pinecone Vector Store upon startup
+
 load_dotenv()
 
 vector_store = LangchainPinecone.from_existing_index(
@@ -11,7 +13,6 @@ vector_store = LangchainPinecone.from_existing_index(
     embedding=embeddings
 )
 
-# Assuming LangchainPinecone was initialized already
 pinecone_index = vector_store._index
 
 try:

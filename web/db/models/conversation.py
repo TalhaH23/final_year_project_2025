@@ -19,9 +19,6 @@ class Conversation(Base, BaseMixin):
     pdf_id = Column(String, ForeignKey("pdfs.id"), nullable=False)
     pdf = relationship("Pdf", back_populates="conversations")
 
-    # user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
-    # user = relationship("User", back_populates="conversation")
-
     messages = relationship(
         "Message", back_populates="conversation", order_by="Message.created_on", cascade="all, delete-orphan"
     )
@@ -29,11 +26,6 @@ class Conversation(Base, BaseMixin):
     def as_dict(self):
         return {
             "id": self.id,
-            # "created_on": self.created_on.isoformat(),
             "pdf_id": self.pdf_id,
-            # "user_id": self.user_id,
-            # "retriever": self.retriever,
-            # "memory": self.memory,
-            # "llm": self.llm,
             "messages": [m.as_dict() for m in self.messages],
         }

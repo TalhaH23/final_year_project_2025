@@ -25,8 +25,6 @@ class Message(Base, BaseMixin):
             "id": self.id,
             "role": self.role,
             "content": self.content,
-            # "created_on": self.created_on.isoformat(),
-            # "conversation_id": self.conversation_id,
         }
 
     def as_lc_message(self) -> HumanMessage | AIMessage | SystemMessage:

@@ -1,16 +1,13 @@
 import os
-from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
-from langchain.prompts import PromptTemplate
 import asyncio
 import aiofiles
 import time
-import re
 import json
+from dotenv import load_dotenv
+from langchain.prompts import PromptTemplate
 from typing import List
 from collections import defaultdict
 from langchain_core.documents import Document
-from app.title_extraction import chunk_document_by_titles
 from collections import defaultdict
 from app.vector_stores.pinecone import vector_store
 from app.stard_summary import llm_summary, group_doc_by_section
@@ -19,40 +16,15 @@ from app.llms.chatopenai import light_llm, strong_llm
 
 load_dotenv()
 
-# pdf_folder_path = "PDFs"
-# pdf_files = [os.path.join(pdf_folder_path, f) for f in os.listdir(pdf_folder_path) if f.endswith('.pdf')]
-
 CHECKLIST_DIR = "app/checklists"
 PRISMA_CHECKLIST_PATH = os.path.join(CHECKLIST_DIR, "prisma.md")
 
 with open(PRISMA_CHECKLIST_PATH, "r", encoding="utf-8") as f:
     prisma_checklist = f.read()
 
-
-# review_question_prompt = PromptTemplate(
-#     input_variables=["review_question", "summary"],
-#     template="""
-# Given the systematic review question and the summary of the document, decide if the document should be included in the systematic review. Use the PICO model to guide your decision.
-
-# Systematic Review Question:
-# {review_question}
-
-# Summary:
-# {summary}
-
-# Return your answer in the following format:
-# Decision: [Include / Exclude / Unclear]  
-# Confidence: [1 to 5]  
-# Population: [Matched / Not Matched / N/A] [brief summary]
-# Intervention: [Matched / Not Matched / N/A] [brief summary]
-# Comparator: [Matched / Not Matched / N/A] [brief summary]
-# Outcome: [Matched / Not Matched / N/A] [brief summary]
-# Rationale: [brief explanation]
-# """
-# )
-
-
 def generate_review_prompt(criteria: list[str]) -> PromptTemplate:
+    """Generates a prompt template for systematic review screening"""
+    
     criteria_format = "\n".join(
         f"{c}: [Matched / Not Matched / N/A] [brief summary]" for c in criteria
     )
@@ -77,8 +49,107 @@ Rationale: [brief explanation]
         template=template.strip()
     )
 
-# review_question_chain = review_question_prompt | light_llm
 
+async def llm_screening(review_question: str | None, summary: str, criteria: list[str]):
+    """Screen documents for systematic review based on the provided question and criteria"""
+    
+    start_time = time.perf_counter()
+    print(f"Screening documents for question: {review_question} with criteria: {criteria}")
+    if not review_question:
+        raise ValueError("Review question is required for screening.")
+
+    try:
+        prompt = generate_review_prompt(criteria)
+        print(prompt.template)
+        review_question_chain = prompt | light_llm
+        response = await review_question_chain.ainvoke({
+            "review_question": review_question,
+            "summary": summary
+        })
+        end_time = time.perf_counter() - start_time
+        # print(f"Screening completed in {end_time:.2f} seconds.")
+        return response.content
+    except Exception as e:
+        print(f"Error in llm_screening: {e}")
+        return None
+    
+async def get_screening_result(
+    pdf_id, review_question, summary_folder, review_result_folder,
+    docs: List[Document], criteria: List[str]
+):
+    """Get the screening result for a PDF document based on the summary, question and criteria"""
+    
+    start_time = time.perf_counter()
+    print(f"Getting screening result for PDF ID: {pdf_id}")
+    summary_text = await llm_summary(docs)
+    raw_screening = await llm_screening(review_question, summary_text, criteria)
+    screening_result = parse_llm_screening_output(raw_screening, criteria)
+
+    summary_path = os.path.join(summary_folder, f"{pdf_id}.txt")
+    async with aiofiles.open(summary_path, 'w', encoding='utf-8') as f:
+        await f.write(summary_text or "No summary generated.")
+
+    review_result_path = os.path.join(review_result_folder, f"{pdf_id}_screening_result.json")
+    async with aiofiles.open(review_result_path, 'w', encoding='utf-8') as f:
+        await f.write(json.dumps(screening_result, indent=2))
+
+    end_time = time.perf_counter() - start_time
+    # print(f"Screening result for {pdf_id} total time taken: {end_time:.2f} seconds.")
+    return summary_path
+
+
+def filter_documents_by_similarity(
+    query: str,
+    ids: List[str],
+    n: int = 10,
+) -> List[str]:
+    """
+    Filter documents based on similarity to a query, restricting to a provided list of document IDs.
+    """
+    start_time = time.perf_counter()
+    print(f"Filtering documents for query: {query} with IDs: {ids}")
+    results = vector_store.similarity_search_with_score(query, k=100)
+
+    doc_scores = defaultdict(list)
+    for doc, score in results:
+        pdf_id = doc.metadata.get("pdf_id")
+        if pdf_id in ids:
+            doc_scores[pdf_id].append(score)
+
+    ranked_docs = sorted(doc_scores.items(), key=lambda x: sum(x[1]) / len(x[1]), reverse=True)
+    top_docs = [pdf_id for pdf_id, _ in ranked_docs[:n]]
+    end_time = time.perf_counter() - start_time
+    # print(f"Filtered {len(top_docs)} documents in {end_time:.2f} seconds.")
+
+    return top_docs
+
+async def wait_for_embeddings(pdf_ids: List[str], timeout: int = 60, poll_interval: int = 5) -> None:
+    """Wait for embeddings to be ready in the vector store for the given PDF IDs"""
+    
+    print(f"Waiting for embeddings for {len(pdf_ids)} PDFs...")
+
+    start = time.time()
+    remaining = set(pdf_ids)
+
+    while time.time() - start < timeout and remaining:
+        print(f"Checking Pinecone for {len(remaining)} remaining PDFs...")
+        for pdf_id in list(remaining):
+            try:
+                results = vector_store.similarity_search("placeholder", k=1, filter={"pdf_id": pdf_id})
+                if results:
+                    remaining.remove(pdf_id)
+            except Exception as e:
+                print(f"Error querying vector store for {pdf_id}: {e}")
+        if remaining:
+            await asyncio.sleep(poll_interval)
+
+    if remaining:
+        print(f"Timeout. Missing embeddings for: {remaining}")
+    else:
+        print("All embeddings ready.")
+
+
+###------------------------------------ SYSTEMATIC REVIEW EVALUATION ------------------------------------###
 chunk_evaluation_prompt = PromptTemplate(
     input_variables=["chunk_text", "checklist"],
     template="""
@@ -158,102 +229,15 @@ async def llm_evaluate(sections: List[Document]) -> str:
     return final_evaluation.content
 
 
-async def llm_screening(review_question: str | None, summary: str, criteria: list[str]):
-    if not review_question:
-        raise ValueError("Review question is required for screening.")
 
-    try:
-        prompt = generate_review_prompt(criteria)
-        print(prompt.template)
-        review_question_chain = prompt | light_llm
-        response = await review_question_chain.ainvoke({
-            "review_question": review_question,
-            "summary": summary
-        })
-        return response.content
-    except Exception as e:
-        print(f"Error in llm_screening: {e}")
-        return None
-    
+# async def process_pdfs(filepaths: List[str]):
+#     tasks = []
 
+#     for file_path in filepaths:
+#         docs = chunk_document_by_titles(file_path, chunk_size=500, chunk_overlap=50)
+#         tasks.append(llm_evaluate(docs))
 
-
-    
-async def get_screening_result(
-    pdf_id, review_question, summary_folder, review_result_folder,
-    docs: List[Document], criteria: List[str]
-):
-    print(criteria)
-    summary_text = await llm_summary(docs)
-    raw_screening = await llm_screening(review_question, summary_text, criteria)
-    screening_result = parse_llm_screening_output(raw_screening, criteria)
-
-    summary_path = os.path.join(summary_folder, f"{pdf_id}.txt")
-    async with aiofiles.open(summary_path, 'w', encoding='utf-8') as f:
-        await f.write(summary_text or "No summary generated.")
-
-    review_result_path = os.path.join(review_result_folder, f"{pdf_id}_screening_result.json")
-    async with aiofiles.open(review_result_path, 'w', encoding='utf-8') as f:
-        await f.write(json.dumps(screening_result, indent=2))
-
-    return summary_path
-
-
-def filter_documents_by_similarity(
-    query: str,
-    ids: List[str],
-    n: int = 10,
-) -> List[str]:
-    """
-    Filter documents based on similarity to a query, restricting to a provided list of document IDs.
-    """
-    results = vector_store.similarity_search_with_score(query, k=100)
-
-    doc_scores = defaultdict(list)
-    for doc, score in results:
-        pdf_id = doc.metadata.get("pdf_id")
-        if pdf_id in ids:
-            doc_scores[pdf_id].append(score)
-
-    ranked_docs = sorted(doc_scores.items(), key=lambda x: sum(x[1]) / len(x[1]), reverse=True)
-    top_docs = [pdf_id for pdf_id, _ in ranked_docs[:n]]
-
-    return top_docs
-
-
-
-async def wait_for_embeddings(pdf_ids: List[str], timeout: int = 60, poll_interval: int = 5) -> None:
-    print(f"Waiting for embeddings for {len(pdf_ids)} PDFs...")
-
-    start = time.time()
-    remaining = set(pdf_ids)
-
-    while time.time() - start < timeout and remaining:
-        print(f"Checking Pinecone for {len(remaining)} remaining PDFs...")
-        for pdf_id in list(remaining):
-            try:
-                results = vector_store.similarity_search("placeholder", k=1, filter={"pdf_id": pdf_id})
-                if results:
-                    remaining.remove(pdf_id)
-            except Exception as e:
-                print(f"Error querying vector store for {pdf_id}: {e}")
-        if remaining:
-            await asyncio.sleep(poll_interval)
-
-    if remaining:
-        print(f"⚠️ Timeout. Missing embeddings for: {remaining}")
-    else:
-        print("✅ All embeddings ready.")
-
-
-async def process_pdfs(filepaths: List[str]):
-    tasks = []
-
-    for file_path in filepaths:
-        docs = chunk_document_by_titles(file_path, chunk_size=500, chunk_overlap=50)
-        tasks.append(llm_evaluate(docs))
-
-    evaluation = await asyncio.gather(*tasks)
-    print(evaluation)
-    return evaluation
+#     evaluation = await asyncio.gather(*tasks)
+#     print(evaluation)
+#     return evaluation
 

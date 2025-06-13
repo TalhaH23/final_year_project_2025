@@ -13,7 +13,7 @@ criteria_dict = {
 CRITERIA_GUIDANCE = {
     "Population": {
         "query": "Study population characteristics: age, diagnosis, sample size, recruitment, inclusion and exclusion criteria.",
-        "instruction": "Summarize the participant population, including age range, diagnosis, recruitment method, and any inclusion or exclusion criteria."
+        "instruction": "Summarise the participant population, including age range, diagnosis, recruitment method, and any inclusion or exclusion criteria."
     },
     "Intervention": {
         "query": "Experimental treatment details: name, dosage, frequency, procedure.",
@@ -33,7 +33,7 @@ CRITERIA_GUIDANCE = {
     },
     "Timeframe": {
         "query": "Study duration: follow-up period, timing of interventions and outcome assessments.",
-        "instruction": "Summarize how long the study lasted, including any follow-up period and timing of data collection."
+        "instruction": "Summarise how long the study lasted, including any follow-up period and timing of data collection."
     },
     "Setting": {
         "query": "Study setting: location, institution type, clinical or educational context.",
@@ -45,7 +45,7 @@ CRITERIA_GUIDANCE = {
     },
     "Results": {
         "query": "Main study findings: statistical outcomes, effect size, significance, qualitative themes.",
-        "instruction": "Summarize the main findings of the study, including statistical results or qualitative themes if reported."
+        "instruction": "Summarise the main findings of the study, including statistical results or qualitative themes if reported."
     },
     "Exposure": {
         "query": "Exposure of interest: condition, risk factor, or experience relevant to outcome.",
@@ -53,11 +53,11 @@ CRITERIA_GUIDANCE = {
     },
     "Phenomenon of Interest": {
         "query": "Phenomenon or experience studied: behaviors, perceptions, conditions, or processes of interest.",
-        "instruction": "Summarize the central phenomenon or lived experience being explored or analyzed in the study."
+        "instruction": "Summarise the central phenomenon or lived experience being explored or analyzed in the study."
     },
     "Sample": {
         "query": "Sample description: participant group characteristics, demographics, inclusion criteria.",
-        "instruction": "Summarize the characteristics of the participant sample, including demographics and selection criteria."
+        "instruction": "Summarise the characteristics of the participant sample, including demographics and selection criteria."
     },
     "Perspective": {
         "query": "Stakeholder or perspective focus: patient, clinician, caregiver, organization viewpoint.",
@@ -69,19 +69,16 @@ CRITERIA_GUIDANCE = {
     }
 }
 
-
-
-
-
 def parse_llm_screening_output(raw: str, criteria: list[str]):
+    """Parse the raw output from LLM screening into a structured format."""
+    
     result = {
         "decision": "Unclear",
         "confidence": 0,
         "rationale": "",
         "criteria_matches": {}
     }
-
-    # Extract decision and confidence
+    
     decision_match = re.search(r"Decision:\s*(Include|Exclude|Unclear)", raw, re.IGNORECASE)
     confidence_match = re.search(r"Confidence:\s*(\d)", raw)
     rationale_match = re.search(r"Rationale:\s*(.+)", raw, re.DOTALL)
@@ -93,7 +90,6 @@ def parse_llm_screening_output(raw: str, criteria: list[str]):
     if rationale_match:
         result["rationale"] = rationale_match.group(1).strip()
 
-    # Extract each criterion
     for crit in criteria:
         pattern = rf"{crit}:\s*(.+)"
         match = re.search(pattern, raw, re.IGNORECASE)

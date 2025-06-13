@@ -1,12 +1,10 @@
-from pydantic import BaseModel
 from langchain.memory import ConversationBufferMemory
 from langchain.schema import BaseChatMessageHistory
 from web.api import get_messages_by_conversation_id, add_message_to_conversation
-from web.db import get_db
 from sqlalchemy.orm import Session
-from fastapi import Depends
 
 class SQLMessageHistory(BaseChatMessageHistory):
+    """SQL-based message history for LangChain conversations"""
     def __init__(self, conversation_id: str, db: Session):
         self.conversation_id = conversation_id
         self.db = db
@@ -27,6 +25,9 @@ class SQLMessageHistory(BaseChatMessageHistory):
         pass
     
 def build_memory(chat_args, db: Session):
+    """
+    Builds a conversation memory that stores chat history in a SQL database
+    """
     return ConversationBufferMemory(
         chat_memory=SQLMessageHistory(
             conversation_id=chat_args.conversation_id,

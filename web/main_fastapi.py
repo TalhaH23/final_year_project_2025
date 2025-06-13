@@ -12,12 +12,11 @@ from fastapi import FastAPI, UploadFile, File, Request, Depends, Form
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import FileResponse, RedirectResponse, JSONResponse
+from fastapi.responses import FileResponse, RedirectResponse
 from fastapi.concurrency import run_in_threadpool
 
-# from app.chunking_test import generate_summary
 from app.vector_stores.pinecone import process_embeddings
-from app.title_extraction import chunk_document_by_titles, chunk_docs
+from app.title_extraction import chunk_document_by_titles
 from app.celery.tasks import embeddings
 from web.routes.conversation_messages import router as conversation_router
 from app.systematic_review import filter_documents_by_similarity, wait_for_embeddings, get_screening_result
@@ -59,13 +58,11 @@ async def process_single_pdf(pdf: UploadFile, project: Project, db: Session) -> 
     pdf_id = str(uuid.uuid4())
     file_path = os.path.join(UPLOAD_FOLDER, f"{pdf_id}.pdf")
 
-    # Save file (async)
     async with aiofiles.open(file_path, 'wb') as f:
         await f.write(await pdf.read())
 
     logger.info(f"Uploaded {pdf.filename} to {file_path}")
 
-    # Chunking (CPU-bound)
     chunked_docs, pdf_title = await run_in_threadpool(chunk_document_by_titles, file_path, 500, 50)
 
     db_pdf = Pdf(id=pdf_id, name=pdf.filename, project_id=project.id, title=pdf_title)
@@ -76,7 +73,6 @@ async def process_single_pdf(pdf: UploadFile, project: Project, db: Session) -> 
         for doc in chunked_docs
     ]
 
-    # Embedding (sync I/O-bound)
     logger.info(f"Creating embeddings for {pdf.filename}")
     try:
         await run_in_threadpool(process_embeddings, pdf_id, serialized_docs)
@@ -141,7 +137,7 @@ async def create_project(
     ]
     await asyncio.gather(*tasks)
 
-    logger.info(f"✅ Project completed in {time.perf_counter() - start:.2f}s")
+    logger.info(f"Project completed in {time.perf_counter() - start:.2f}s")
     return RedirectResponse("/", status_code=303)
 
 @app.get("/", response_class=HTMLResponse)
@@ -156,16 +152,19 @@ async def handle_upload(
     pdfs: List[UploadFile] = File(...),
     db: Session = Depends(get_db),
 ):
+    
+    logger.info("Starting upload and processing")
+    start = time.perf_counter()
+    
     project = db.query(Project).filter_by(id=project_id).first()
     if not project:
         return HTMLResponse(content="Invalid project ID", status_code=400)
 
     all_pdf_ids, chunks_dict = await process_uploaded_pdfs(pdfs, project, db)
 
-    # Wait for embeddings
+
     await wait_for_embeddings(all_pdf_ids, timeout=120, poll_interval=5)
 
-    # Recalculate filtering
     review_question = project.review_question
     filtered_ids = json.loads(project.filtered_pdf_ids or "[]")
     new_filtered = filter_documents_by_similarity(review_question, all_pdf_ids, n=3)
@@ -173,20 +172,17 @@ async def handle_upload(
     project.filtered_pdf_ids = json.dumps(merged_filtered_ids)
     
     db_pdfs = db.query(Pdf).filter(Pdf.id.in_(merged_filtered_ids)).all()
-    filtered_pdfs = {pdf.id: pdf for pdf in db_pdfs}
     db.commit()
     
     criteria = criteria_dict.get(project.search_criteria, [])
 
-    # Run screening results for new PDFs
     tasks = [
         get_screening_result(pdf_id, review_question, SUMMARY_FOLDER, REVIEW_RESULT_FOLDER, chunks_dict[pdf_id], criteria)
         for pdf_id in new_filtered
     ]
     await asyncio.gather(*tasks)
-
-    # # Rebuild evidence table (optional: only for new_filtered)
-    # await create_evidence_table(filtered_pdfs, criteria, k=5)
+    
+    logger.info(f"Upload completed in {time.perf_counter() - start:.2f}s")
 
     return RedirectResponse(f"/projects/{project_id}", status_code=303)
 
@@ -199,9 +195,7 @@ async def view_project(request: Request, project_id: str, db: Session = Depends(
 
     pdfs = db.query(Pdf).filter_by(project_id=project_id).all()
     filtered_ids = json.loads(project.filtered_pdf_ids or "[]")
-    filtered_pdfs = {pdf.id: pdf for pdf in pdfs if pdf.id in filtered_ids}
     
-    # Load screening results from disk
     screening_decisions = {}
     for pdf_id in filtered_ids:
         review_path = os.path.join("review_results", f"{pdf_id}_screening_result.json")
@@ -236,7 +230,6 @@ async def generate_evidence_table(
 
     table = await create_evidence_table(pdf_dict, criteria, k=5)
 
-    # ✅ Save table to disk so it can be retrieved later
     cached_path = os.path.join("review_results", f"{project_id}_evidence_table.json")
     with open(cached_path, "w", encoding="utf-8") as f:
         json.dump(table, f, indent=2)
@@ -252,7 +245,6 @@ async def get_cached_evidence_table(
     project_id: str,
     db: Session = Depends(get_db)
 ):
-    # Define path where evidence_table is stored
     path = os.path.join("review_results", f"{project_id}_evidence_table.json")
     
     if not os.path.exists(path):

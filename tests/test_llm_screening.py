@@ -1,8 +1,9 @@
 import sys
 import types
 from dataclasses import dataclass
+import pytest
 from unittest.mock import patch
-import app.title_extraction as te
+import app.systematic_review as sr
 
 # Create dummy external modules that are missing in the test environment
 for name in ["fitz", "pdfplumber", "pymupdf"]:
@@ -94,39 +95,97 @@ def encoding_for_model(model_name):
 tiktoken_mod.encoding_for_model = encoding_for_model
 sys.modules.setdefault("tiktoken", tiktoken_mod)
 
-def test_chunk_document_by_titles_with_titles(tmp_path):
-    dummy_elements = [elements.Element()]
-    text = "Introduction\nIntro text\nMethods\nMethods text"
-    with patch.object(te, "get_partitioned_elements", return_value=dummy_elements), \
-         patch.object(te, "get_intersecting_titles", return_value=(["Introduction", "Methods"], "Mock Title")), \
-         patch.object(te, "extract_cleaned_text", return_value=text), \
-         patch.object(te, "_write_chunk_to_file"):
-        docs, main_title = te.chunk_document_by_titles("dummy.pdf", chunk_size=1000, chunk_overlap=0)
+# Fixture to set asyncio backend for anyio
+@pytest.fixture
+def anyio_backend():
+    return "asyncio"
 
-    assert main_title == "Mock Title"
-    assert len(docs) == 2
-    assert docs[0].metadata == {
-        "source": "dummy.pdf",
-        "main_title": "Mock Title",
-        "section_title": "Introduction",
-        "table": False,
-    }
-    assert docs[1].metadata["section_title"] == "Methods"
+# Stub missing external modules
+dotenv = types.ModuleType("dotenv")
+def load_dotenv():
+    pass
+dotenv.load_dotenv = load_dotenv
+sys.modules.setdefault("dotenv", dotenv)
 
+openai_mod = types.ModuleType("langchain_openai")
+class ChatOpenAI:
+    def __init__(self, *args, **kwargs):
+        pass
+    async def ainvoke(self, *args, **kwargs):
+        return types.SimpleNamespace(content="")
+openai_mod.ChatOpenAI = ChatOpenAI
+sys.modules.setdefault("langchain_openai", openai_mod)
 
-def test_chunk_document_by_titles_no_titles():
-    dummy_elements = [elements.Element()]
-    text = "Only text without titles"
-    with patch.object(te, "get_partitioned_elements", return_value=dummy_elements), \
-         patch.object(te, "get_intersecting_titles", return_value=([], "Mock Title")), \
-         patch.object(te, "extract_cleaned_text", return_value=text), \
-         patch.object(te, "_write_chunk_to_file"):
-        docs = te.chunk_document_by_titles("dummy.pdf", chunk_size=1000, chunk_overlap=0)
+prompts_mod = types.ModuleType("langchain.prompts")
+class PromptTemplate:
+    def __init__(self, input_variables=None, template=""):
+        self.input_variables = input_variables
+        self.template = template
+    def __or__(self, other):
+        return other
+prompts_mod.PromptTemplate = PromptTemplate
+sys.modules.setdefault("langchain.prompts", prompts_mod)
 
-    assert len(docs) == 1
-    assert docs[0].metadata == {
-        "source": "dummy.pdf",
-        "main_title": "Mock Title",
-        "section_title": "Full Document",
-        "table": False,
-    }
+aiofiles_mod = types.ModuleType("aiofiles")
+class DummyFile:
+    async def __aenter__(self):
+        return self
+    async def __aexit__(self, exc_type, exc, tb):
+        pass
+    async def read(self):
+        return ""
+    async def write(self, data):
+        pass
+async def aio_open(*args, **kwargs):
+    return DummyFile()
+aiofiles_mod.open = aio_open
+sys.modules.setdefault("aiofiles", aiofiles_mod)
+
+pinecone_mod = types.ModuleType("app.vector_stores.pinecone")
+class DummyVectorStore:
+    def similarity_search_with_score(self, query, k=10):
+        return []
+pinecone_mod.vector_store = DummyVectorStore()
+sys.modules.setdefault("app.vector_stores.pinecone", pinecone_mod)
+
+stard_mod = types.ModuleType("app.stard_summary")
+async def llm_summary(docs):
+    return ""
+def group_doc_by_section(sections):
+    return [sections]
+stard_mod.llm_summary = llm_summary
+stard_mod.group_doc_by_section = group_doc_by_section
+sys.modules.setdefault("app.stard_summary", stard_mod)
+
+chat_mod = types.ModuleType("app.llms.chatopenai")
+class DummyLLM:
+    async def ainvoke(self, *args, **kwargs):
+        return types.SimpleNamespace(content="")
+chat_mod.light_llm = DummyLLM()
+chat_mod.strong_llm = DummyLLM()
+sys.modules.setdefault("app.llms.chatopenai", chat_mod)
+
+@pytest.mark.anyio
+async def test_llm_screening_requires_question(anyio_backend):
+    with pytest.raises(ValueError):
+        await sr.llm_screening(None, "summary", ["crit"])
+
+@pytest.mark.anyio
+async def test_llm_screening_returns_llm_output(anyio_backend):
+    expected = "ok"
+
+    class DummyPrompt:
+        def __init__(self):
+            self.template = "dummy"
+        def __or__(self, other):
+            return other
+
+    class DummyOutputLLM:
+        async def ainvoke(self, inputs):
+            return types.SimpleNamespace(content=expected)
+
+    dummy_llm = DummyOutputLLM()
+    with patch.object(sr, "generate_review_prompt", return_value=DummyPrompt()), \
+         patch.object(sr, "light_llm", dummy_llm):
+        result = await sr.llm_screening("question", "summary", ["crit"])
+    assert result == expected

@@ -13,6 +13,11 @@ from app.models import ChatArgs
 from sqlalchemy.orm import Session
     
 def build_chat(chat_args: ChatArgs, db: Session):
+    """
+    Builds a Retrieval-Augmented Generation (RAG) chat pipeline using LangChain components.
+    This includes setting up the LLM, retriever, conversational memory, and history-aware retrieval
+    to support context-rich question answering.
+    """
     llm: BaseChatModel = build_llm(chat_args)
     retriever: BaseRetriever = build_retriever(chat_args)
     memory: ConversationBufferMemory = build_memory(chat_args, db)
